@@ -3,12 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './game.entity';
 import { GameService } from './game.service';
 import { GameController } from './game.controller';
-import {UserModule} from '../user/user.module';
+import { TeamModule } from 'team/team.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Team]),
-        UserModule,
+        TypeOrmModule.forFeature([Game]),
+        TeamModule,
     ],
     providers: [GameService],
     controllers: [GameController],

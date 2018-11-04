@@ -7,17 +7,21 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
+import { Score } from '../score/score.entity';
 
 @Entity()
 export class Team {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ length: 500 })
+    @Column({ unique: true, length: 500 })
     name: string;
 
     @OneToMany(type => User, user => user.team)
     users: User[];
+
+    @OneToMany(type => Score, score => score.team)
+    scores: Score[];
 
     @CreateDateColumn()
     createdAt: string;

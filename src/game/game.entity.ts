@@ -1,20 +1,23 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { User } from '../user/user.entity';
+import { Score } from '../score/score.entity';
 
 @Entity()
 export class Game {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 500 })
+  @Column({ unique: true, length: 500 })
   name: string;
 
   @Column()
-  isActive: boolean;
+  isActive: boolean = false;
 
   @CreateDateColumn()
   createdAt: string;
 
   @UpdateDateColumn()
   updatedAt: string;
+
+  @OneToMany(type => Game, game => game.scores)
+  scores: Score[];
 }
