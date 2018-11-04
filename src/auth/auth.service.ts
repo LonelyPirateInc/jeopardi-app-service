@@ -28,9 +28,4 @@ export class AuthService {
 
     return false;
   }
-
-  async createUserInvite(userInvite: UserInvite): Promise<boolean> {
-    
-    return false;
-  }
 }
