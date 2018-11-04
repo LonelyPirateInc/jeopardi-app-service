@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {getManager, Repository} from 'typeorm';
+import {getManager, Repository, UpdateResult} from 'typeorm';
 import { Game } from './game.entity';
 
 @Injectable()
@@ -14,12 +14,11 @@ export class GameService {
   }
 
   async getGameById(gameId: string): Promise<Game> {
-    return await this.gameRepository.findOne(gameId);
+    return (await this.gameRepository.findOne(gameId));
   }
 
-    async updateGame(game: Game): Promise<Game> {
-        const updatedGame = await this.gameRepository.save(game);
-        console.log(updatedGame);
-        return updatedGame;
+    async toggleGame(game: Game): Promise<Game> {
+        await this.gameRepository.save(game);
+        return await this.gameRepository.findOne(game.id);
     }
 }

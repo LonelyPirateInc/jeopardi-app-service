@@ -18,7 +18,7 @@ export class GameController {
 
   @Post('create')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async greateGame(@Response() res: any, @Body() game: Game): Promise<Game> {
+  async createGame(@Response() res: any, @Body() game: Game): Promise<Game> {
     try {
       const newGame = await this.gameService.createGame(game);
       return res.status(HttpStatus.OK).json({
@@ -42,17 +42,20 @@ export class GameController {
   ): Promise<boolean> {
     try {
       const gameById = await this.gameService.getGameById(gameId);
-      gameById.isActive = isActive;
-
-      const updatedGame = await this.gameService.updateGame(gameById);
-      return res.status(HttpStatus.OK).json({
-        success: true,
-        payload: updatedGame.isActive,
-      });
+      if (gameById) {
+        gameById.isActive = isActive;
+        const updatedGame = await this.gameService.toggleGame(gameById);
+        return res.status(HttpStatus.OK).json({
+          success: true,
+          payload: updatedGame,
+        });
+      } else {
+        throw new Error('ER_NOT_FOUND');
+      }
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
         success: false,
-        message: error.code,
+        message: error.code || error.message,
       });
     }
   }
