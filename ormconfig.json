@@ -1,0 +1,15 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "",
+  "database": "jeopardy",
+  "entities": ["src/**/**.entity{.ts,.js}"],
+  "migrations": ["migrations/*{.ts,.js}"],
+  "cli": {
+    "migrationsDir": "migrations"
+  },
+  "synchronize": true
+}
+
