@@ -4,8 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   CreateDateColumn,
-  UpdateDateColumn
-} from "typeorm";
+  UpdateDateColumn,
+} from 'typeorm';
 import { Team } from '../team/team.entity';
 import { Game } from '../game/game.entity';
 
@@ -14,8 +14,8 @@ export class Score {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ unique: true, length: 500 })
-    name: string;
+    @Column({ type: 'int' })
+    point: number;
 
     @CreateDateColumn()
     createdAt: string;

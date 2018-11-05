@@ -9,6 +9,7 @@ import { ScoreModule } from './score/score.module';
 import { GameModule } from './game/game.module';
 import { QuestionModule } from 'question/question.module';
 import { AnswerModule } from 'answer/answer.module';
+// import { CategoryModule } from 'category/category.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AnswerModule } from 'answer/answer.module';
       ScoreModule,
       QuestionModule,
       AnswerModule,
+      // CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

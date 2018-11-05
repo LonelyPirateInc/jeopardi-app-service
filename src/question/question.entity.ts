@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Answer } from '../answer/answer.entity';
+import { Category } from '../category/category.entity';
 
 @Entity()
 export class Question {
@@ -25,4 +26,7 @@ export class Question {
 
     @OneToMany(type => Question, question => question.answers)
     answers: Answer[];
+
+    @ManyToOne(type => Category, category => category.questions)
+    category: Category;
 }

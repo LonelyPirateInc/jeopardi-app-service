@@ -1,5 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { Score } from '../score/score.entity';
+import { Question } from '../question/question.entity';
+import { Category } from '../category/category.entity';
 
 @Entity()
 export class Game {
@@ -20,4 +22,7 @@ export class Game {
 
   @OneToMany(type => Game, game => game.scores)
   scores: Score[];
+
+  @OneToMany(type => Game, game => game.categories)
+  categories: Category[];
 }

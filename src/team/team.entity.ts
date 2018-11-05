@@ -17,15 +17,15 @@ export class Team {
     @Column({ unique: true, length: 500 })
     name: string;
 
-    @OneToMany(type => User, user => user.team)
-    users: User[];
-
-    @OneToMany(type => Score, score => score.team)
-    scores: Score[];
-
     @CreateDateColumn()
     createdAt: string;
 
     @UpdateDateColumn()
     updatedAt: string;
+
+    @OneToMany(type => User, user => user.team)
+    users: User[];
+
+    @OneToMany(type => Score, score => score.team)
+    scores: Score[];
 }
