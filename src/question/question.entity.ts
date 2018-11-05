@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Answer } from '../answer/answer.entity';
 import { Category } from '../category/category.entity';
-import { Game } from 'game/game.entity';
+import { Game } from '../game/game.entity';
 
 @Entity()
 export class Question {
