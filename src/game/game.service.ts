@@ -6,7 +6,7 @@ import { Game } from './game.entity';
 @Injectable()
 export class GameService {
   constructor(
-    @InjectRepository(Game) private readonly gameRepository: Repository<Game>
+    @InjectRepository(Game) private readonly gameRepository: Repository<Game>,
   ) {}
 
   async createGame(game: Game): Promise<Game> {

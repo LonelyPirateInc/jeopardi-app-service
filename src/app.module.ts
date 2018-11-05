@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module';
 import { TeamModule } from './team/team.module';
 import { ScoreModule } from './score/score.module';
 import { GameModule } from './game/game.module';
+import { QuestionModule } from 'question/question.module';
+import { AnswerModule } from 'answer/answer.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { GameModule } from './game/game.module';
       TeamModule,
       GameModule,
       ScoreModule,
+      QuestionModule,
+      AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

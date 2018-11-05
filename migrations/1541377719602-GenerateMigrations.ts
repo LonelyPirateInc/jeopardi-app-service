@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class GenerateMigrations1541345900210 implements MigrationInterface {
+export class GenerateMigrations1541377719602 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query("CREATE TABLE `auth_token` (`id` int NOT NULL, `token` varchar(255) NOT NULL, UNIQUE INDEX `IDX_7a74281711d1a581b4dcc4d59f` (`token`), PRIMARY KEY (`id`)) ENGINE=InnoDB");

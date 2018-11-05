@@ -17,15 +17,15 @@ export class Score {
     @Column({ unique: true, length: 500 })
     name: string;
 
-    @ManyToOne(type => Team, team => team.scores)
-    team: Team;
-
-    @ManyToOne(type => Game, game => game.scores)
-    game: Game;
-
     @CreateDateColumn()
     createdAt: string;
 
     @UpdateDateColumn()
     updatedAt: string;
+
+    @ManyToOne(type => Team, team => team.scores)
+    team: Team;
+
+    @ManyToOne(type => Game, game => game.scores)
+    game: Game;
 }
