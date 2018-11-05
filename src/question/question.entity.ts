@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Answer } from '../answer/answer.entity';
 import { Category } from '../category/category.entity';
+import { Game } from 'game/game.entity';
 
 @Entity()
 export class Question {
@@ -17,6 +18,9 @@ export class Question {
 
     @Column()
     questionText: string;
+
+    @Column()
+    isActive: boolean;
 
     @CreateDateColumn()
     createdAt: string;
@@ -29,4 +33,7 @@ export class Question {
 
     @ManyToOne(type => Category, category => category.questions)
     category: Category;
+
+  @ManyToOne(type => Game, game => game.questions)
+    game: Game;
 }

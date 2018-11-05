@@ -23,6 +23,6 @@ export class Game {
   @OneToMany(type => Game, game => game.scores)
   scores: Score[];
 
-  @OneToMany(type => Game, game => game.categories)
-  categories: Category[];
+  @OneToMany(type => Game, game => game.questions)
+  questions: Question[];
 }

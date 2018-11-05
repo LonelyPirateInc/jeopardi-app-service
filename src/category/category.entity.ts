@@ -27,7 +27,4 @@ export class Category {
 
   @OneToMany(type => Category, category => category.questions)
   questions: Question[];
-
-  @ManyToOne(type => Game, game => game.categories)
-  game: Game;
 }
