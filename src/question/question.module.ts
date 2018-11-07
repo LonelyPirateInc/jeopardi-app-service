@@ -4,11 +4,15 @@ import { Question } from './question.entity';
 import { QuestionService } from './question.service';
 import { QuestionController } from './question.controller';
 import { TeamModule } from '../team/team.module';
+import { AnswerModule } from '../answer/answer.module';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Question]),
         TeamModule,
+        AnswerModule,
+        CategoryModule,
     ],
     providers: [QuestionService],
     controllers: [QuestionController],

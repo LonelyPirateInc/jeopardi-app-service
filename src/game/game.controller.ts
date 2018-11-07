@@ -16,18 +16,29 @@ import { TeamService } from '../team/team.service';
 
 import { GameService } from '../game/game.service';
 import { User } from '../user/user.entity';
-import { getManager } from 'typeorm';
+import { getManager, getConnection } from 'typeorm';
 import { Game } from './game.entity';
 import { Answer } from 'answer/answer.entity';
-import { Score } from 'score/score.entity';
+import { Score } from '../score/score.entity';
 import { ScoreService } from 'score/score.service';
-import { Question } from 'question/question.entity';
+import { Question } from '../question/question.entity';
+
+import * as xorBy from 'lodash/xorBy';
+import * as flattenDepth from 'lodash/flattenDepth';
+
+import * as data from '../../assets/questions.json';
+import { Category } from '../category/category.entity';
+import { QuestionService } from '../question/question.service';
+import { AnswerService } from '../answer/answer.service';
+import { promises } from 'fs';
 
 @Controller('game')
 export class GameController {
   constructor(
     private readonly teamService: TeamService,
     private readonly gameService: GameService,
+    private readonly questionService: QuestionService,
+    private readonly answerService: AnswerService,
     // private readonly scoreService: ScoreService,
   ) {}
 
@@ -35,12 +46,57 @@ export class GameController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async createGame(@Response() res: any, @Body() game: Game): Promise<Game> {
     try {
-      const newGame = await this.gameService.createGame(game);
-      return res.status(HttpStatus.OK).json({
-        success: true,
-        payload: newGame,
+      await getManager().transaction(async transactionalEntityManager => {
+        console.log(game);
+        const newGame = await transactionalEntityManager.save(game);
+        const categoriesData = data.map(dataItem => {
+          const category = new Category();
+          category.categoryText = dataItem.categoryName;
+          return category;
+        });
+
+        const existingCategories = await transactionalEntityManager.find(Category);
+        const newCategories = xorBy(existingCategories, categoriesData, 'categoryText');
+        if (newCategories && newCategories.length) {
+          await transactionalEntityManager.save(Category, categoriesData);
+        }
+
+        const categories = await transactionalEntityManager.find(Category);
+        const questionsData = categories.map(category => data
+          .filter(dataItem => dataItem.categoryName === category.categoryText)
+          .map(dataItem => dataItem.questions.map(question => {
+            const newQuestion = new Question();
+            newQuestion.category = category;
+            newQuestion.questionText = question.questionText;
+            newQuestion.game = newGame;
+            newQuestion.difficulty = question.difficulty;
+            newQuestion.isActive = true;
+            newQuestion.answers = question.answers.map(answerData => this.answerService.buildAnswerForQuestion(answerData));
+            return newQuestion;
+          })));
+
+        const questions = flattenDepth(questionsData, 2);
+        await transactionalEntityManager.save(Question, questions);
+
+        const answersData = questions.map(question => {
+          const { answers } = question;
+          answers.forEach(answer => answer.questionId = question.id);
+          return answers;
+        });
+
+        await transactionalEntityManager.save(Answer, flattenDepth(answersData, 2));
+
+        return newGame;
+      }).then(async newGame => {
+        const theGame = await getConnection().getRepository(Game).find(newGame);
+        const questions = await getConnection().getRepository(Question).find({where: {game: newGame}});
+        return res.status(HttpStatus.OK).json({
+          success: true,
+          payload: questions,
+        });
       });
     } catch (error) {
+      console.log(error);
       return res.status(HttpStatus.BAD_REQUEST).json({
         success: false,
         message: error.code,
@@ -60,14 +116,22 @@ export class GameController {
       if (gameById) {
         gameById.isActive = isActive;
         const updatedGame = await this.gameService.toggleGame(gameById);
+        const questions = await this.questionService.getQuestionsByGame(updatedGame);
+        const questionsWithAnswers = questions.map(async question => {
+          const answers = await this.answerService.getAnswersByQuestion(question);
+          question.answers = answers;
+          return question;
+        });
+        const awaitPromise = await Promise.all(questionsWithAnswers);
         return res.status(HttpStatus.OK).json({
           success: true,
-          payload: updatedGame,
+          payload: awaitPromise,
         });
       } else {
         throw new Error('ER_NOT_FOUND');
       }
     } catch (error) {
+      console.log(error);
       return res.status(HttpStatus.BAD_REQUEST).json({
         success: false,
         message: error.code || error.message,
@@ -138,4 +202,5 @@ export class GameController {
       });
     }
   }
+  // getQuestionCategories
 }

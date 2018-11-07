@@ -1,34 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {getManager, Repository} from 'typeorm';
+import { Repository } from 'typeorm';
 import { Question } from './question.entity';
+import { Category } from 'category/category.entity';
+import { Game } from 'game/game.entity';
 
 @Injectable()
 export class QuestionService {
   constructor(
     @InjectRepository(Question)
-    private readonly teamRepository: Repository<Question>,
+    private readonly questionRepository: Repository<Question>,
   ) {}
 
-//   async getTeams(): Promise<Team[]> {
-//     return await this.teamRepository.find();
-//   }
+  public buildQuestionsForGame(questionsData: any, category: Category, game: Game): Question[] {
+    return questionsData.map(questionData => {
+      const question = new Question();
+      question.questionText = questionData.questionText;
+      question.difficulty = questionData.difficulty;
+      question.category = category;
+      question.game = game;
 
-//   async createTeam(team: Team): Promise<Team> {
-//     return await this.teamRepository.save(team);
-//   }
+      return question;
+    });
+  }
 
-//   buildTeam(obj: any): Team {
-//     const team = new Team();
-//     team.name = obj.team.name;
-//     return team;
-//   }
-
-//   async getTeamById(teamId: string): Promise<Team | boolean> {
-//     const teamById = this.teamRepository.findOne(teamId);
-//     if (teamById) {
-//       return teamById;
-//     }
-//     return false;
-//   }
+  async getQuestionsByGame(game: Game): Promise<Question[]> {
+    return (await this.questionRepository.find({ where: {gameId: game.id} }));
+  }
 }

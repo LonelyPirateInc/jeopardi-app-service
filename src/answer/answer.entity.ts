@@ -13,13 +13,13 @@ export class Answer {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({ length: 500, nullable: true})
     answerText: string;
 
-    @Column({type: 'int'})
+    @Column()
     point: number;
 
-    @Column()
+    @Column({ default: false})
     isCorrect: boolean;
 
     @CreateDateColumn()
@@ -28,6 +28,6 @@ export class Answer {
     @UpdateDateColumn()
     updatedAt: string;
 
-    @ManyToOne(type => Question, question => question.answers)
+    @ManyToOne(type => Question)
     question: Question;
 }

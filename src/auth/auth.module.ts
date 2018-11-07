@@ -18,6 +18,7 @@ import { AuthToken } from './auth-token.entity';
   imports: [TypeOrmModule.forFeature([AuthToken]), UserModule],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
+  exports: [AuthService],
 })
 export class AuthModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {

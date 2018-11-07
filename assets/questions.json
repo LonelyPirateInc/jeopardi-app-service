@@ -1,0 +1,227 @@
+[{
+    "categoryName": "400G, 600G, 800G... Game On!",
+    "questions": [{
+        "questionText": "My customers are saying that Acacia’s 2x600G solution, AC1200, will be available soon. How do I sell against this?  Select ALL that apply.",
+        "difficulty": 0,
+        "answers": [{
+            "answerText": "The AC1200 is still not planned on competitive platforms until at least 1Q2019, and Acacia has missed their date many times.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Position WaveLogic 5 Extreme as being a better solution for 50GHz gridded networks.",
+            "point": -30000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "With its strong ramp, WaveLogic Ai provides volume-based savings, allowing it to still be very competitive.",
+            "point": 30000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "WaveLogic 5 Extreme will be available end of 2019, delivering 800G with a further leapfrog in economics and capacity.",
+            "point": 20000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Offer to buy lunch at the most expensive restaurant in the area.",
+            "point": -20000,
+            "isCorrect": false
+          }
+        ]
+      },
+
+      {
+        "questionText": "Which of these statements are true with respect to Ciena’s coherent pluggable strategy? Select ALL that apply",
+        "difficulty": 1,
+        "answers": [{
+            "answerText": "Ciena will offer 6500-S, 6500-T and Packet Networking devices w/ CFP2-DCO slots in 2019.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Ciena plans to deliver QSFP-DD plugs to address 400ZR applications.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Ciena plans to deliver CFP8 plugs in 1Q2019 for faster time to market.",
+            "point": -20000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Ciena plans to deliver 400G in SFP+ pluggables.",
+            "point": -20000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Ciena will be offering coherent pluggables for outside plant deployments.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Ciena will be offering CFP2-DCO pluggables mid-2019.",
+            "point": 10000,
+            "isCorrect": true
+          }
+        ]
+      },
+
+      {
+        "questionText": "Cisco, Juniper and Arista are telling your customers they can save “big $” by replacing transport gear with high performance coherent pluggables. How should you respond? Select ALL that apply.",
+        "difficulty": 2,
+        "answers": [{
+            "answerText": "Agree. Coherent pluggables will be able to address all applications in the near term.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Customers will be able to benefit from the reliable performance of WaveLogic in pluggable form factor with WaveLogic 5 Nano.",
+            "point": 20000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Deploying a switch/router anywhere you need transponders means a lot more $$$$.",
+            "point": 30000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Provide 90% discount on transport equipment.",
+            "point": -50000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "The thinking that optical networks rely solely on specific FEC gains and power envelope metrics is greatly oversimplifying transport requirements.",
+            "point": 40000,
+            "isCorrect": true
+          }
+        ]
+      }
+
+    ]
+  },
+  {
+    "categoryName": "Whose Line Is It Anyway?",
+    "questions": [{
+        "questionText": "For which situations should you be positioning 6500 RLS to your customer?  Select ALL that apply.",
+        "difficulty": 0,
+        "answers": [{
+            "answerText": "Greenfield opportunities starting mid-2019 and later.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "When customer needs more than 4 degrees of wavelength switching.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "When customer is expanding its 6500 network.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "For point-point DCI applications.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "For applications requiring compact footprint where 600mm depth is acceptable.",
+            "point": 10000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "For cost reduction versus 6500 photonics.",
+            "point": -10000,
+            "isCorrect": false
+          }
+        ]
+      },
+
+      {
+        "questionText": "You are competing against Nokia and Infinera in your account, each of which can offer C-band solutions today that can be upgraded to L-band in future. Your customer is leasing fiber, and wants to move forward with INFN or NOK to future-proof their network.  What is your response?  (Choose the SINGLE best option)",
+        "difficulty": 1,
+        "answers": [{
+            "answerText": "It is cheaper to build another C-band line system than upgrade to C+L.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "You can deploy 6500 RLS C-band photonic line today with seamless upgrade to L-band next year.",
+            "point": -20000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "You can deploy 6500 RLS C-band photonic line today with seamless upgrade to L-band next year.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Describe operational and capacity inefficiencies of NOK/INFN solution; best to wait for RLS C&L.",
+            "point": 20000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Propose the Ciena 6500 S-Series C+L submarine hardware for their application.",
+            "point": -20000,
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "questionText": "Your customer wants you to bid an open line system so that they have the flexibility of deploying any vendor’s coherent transponders on the network. You know that lowest first-in cost is key criteria for this long-time 6500 customer. Select the TWO best options for this scenario.",
+        "difficulty": 2,
+        "answers": [{
+            "answerText": "State that Ciena does not sell line systems without transponders.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Quote a 6500 line system at slightly higher than typical line system margin, with SW licenses for future capacity additions",
+            "point": 20000,
+            "isCorrect": true
+          },
+          {
+            "answerText": "Position the 6500 RLS platform at typical line system margins.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Quote a 6500 photonic line system at higher price/margins.",
+            "point": -10000,
+            "isCorrect": false
+          },
+          {
+            "answerText": "Quote a 6500 line system at your customer’s typical line system margins, with a stipulation that 80% of the transponders are Ciena transponders.",
+            "point": 20000,
+            "isCorrect": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryName": "What's New is Hard(ware)",
+    "questions": [{
+      "questionText": "Some Question Text",
+      "difficulty": 0,
+      "answers": [{
+        "answerText": "Some Answer Text",
+        "point": 10000,
+        "isCorrect": true
+      }]
+    }]
+  },
+  {
+    "categoryName": "Changing the Game",
+    "questions": [{
+      "questionText": "Some Question Text",
+      "difficulty": 0,
+      "answers": [{
+        "answerText": "Some Answer Text",
+        "point": 10000,
+        "isCorrect": true
+      }]
+    }]
+  }
+]

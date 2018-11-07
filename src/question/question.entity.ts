@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Answer } from '../answer/answer.entity';
 import { Category } from '../category/category.entity';
@@ -16,8 +17,11 @@ export class Question {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+  @Column({ length: 500 })
     questionText: string;
+
+    @Column()
+    difficulty: number;
 
     @Column()
     isActive: boolean;
@@ -31,9 +35,11 @@ export class Question {
     @OneToMany(type => Question, question => question.answers)
     answers: Answer[];
 
-    @ManyToOne(type => Category, category => category.questions)
+    @ManyToOne(type => Category, category => category.questions, {eager: true})
+    @JoinColumn({ name: 'category_id' })
     category: Category;
 
-  @ManyToOne(type => Game, game => game.questions)
-    game: Game;
+    @ManyToOne(type => Game, game => game.questions, {eager: true})
+    @JoinColumn({ name: 'game_id' })
+    game: Promise<Game>|Game|number;
 }

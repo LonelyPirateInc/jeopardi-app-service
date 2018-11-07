@@ -7,12 +7,12 @@ import { getManager } from 'typeorm';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { UserInvite } from './interfaces/invite.interface';
-import { AuthService } from 'auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 // import { FacilityService } from 'facility/facility.service';
-import { AuthToken } from 'auth/auth-token.entity';
+import { AuthToken } from '../auth/auth-token.entity';
 
-@Controller('facility')
-export class FacilityController {
+@Controller('user')
+export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,

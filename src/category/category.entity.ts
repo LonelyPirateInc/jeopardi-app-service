@@ -13,10 +13,10 @@ import { Game } from '../game/game.entity';
 
 @Entity()
 export class Category {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({unique: true})
   categoryText: string;
 
   @CreateDateColumn()
