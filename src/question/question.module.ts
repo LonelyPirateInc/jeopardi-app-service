@@ -6,6 +6,7 @@ import { QuestionController } from './question.controller';
 import { TeamModule } from '../team/team.module';
 import { AnswerModule } from '../answer/answer.module';
 import { CategoryModule } from '../category/category.module';
+import { GameModule } from 'game/game.module';
 
 @Module({
     imports: [

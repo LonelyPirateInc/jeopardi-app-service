@@ -61,6 +61,9 @@ export class GameController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async createGame(@Response() res: any, @Body() game: Game): Promise<Game> {
     try {
+      // TODO: refactor with eager loading relations
+      // this is inaccurate. It shoudl use eager loading instead of manually adding the relations here.
+      // Somehow typeorm and my local mysql are not well-matched. So eager loading is not working properly.
       await getManager().transaction(async transactionalEntityManager => {
         const newGame = await transactionalEntityManager.save(game);
         const categoriesData = data.map(dataItem => {

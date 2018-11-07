@@ -24,6 +24,10 @@ export class QuestionService {
     });
   }
 
+  async getQuestionById(questionId: string): Promise<Question> {
+    return (await this.questionRepository.findOne(questionId));
+  }
+
   async getQuestionsByGame(game: Game): Promise<Question[]> {
     return (await this.questionRepository.find({ where: {gameId: game.id} }));
   }
