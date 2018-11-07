@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { Question } from './question.entity';
 import { Category } from 'category/category.entity';
 import { Game } from 'game/game.entity';
+import { AnswerService } from 'answer/answer.service';
 
 @Injectable()
 export class QuestionService {
   constructor(
     @InjectRepository(Question)
     private readonly questionRepository: Repository<Question>,
+    private readonly answerService: AnswerService,
   ) {}
 
   public buildQuestionsForGame(questionsData: any, category: Category, game: Game): Question[] {
@@ -25,7 +27,9 @@ export class QuestionService {
   }
 
   async getQuestionById(questionId: string): Promise<Question> {
-    return (await this.questionRepository.findOne(questionId));
+    const question = await this.questionRepository.findOne(questionId);
+    question.answers = await this.answerService.getAnswersByQuestion(question);
+    return question;
   }
 
   async getQuestionsByGame(game: Game): Promise<Question[]> {
