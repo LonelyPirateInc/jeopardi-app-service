@@ -42,12 +42,28 @@ export class GameController {
     // private readonly scoreService: ScoreService,
   ) {}
 
+  @Get()
+  async getExistingGame(@Response() res: any): Promise<Score[]> {
+    try {
+      const recentGame = await this.gameService.getExistingGame();
+      // const isRecentGameActive = recentGame && recentGame.isActive;
+      return recentGame ? res.status(HttpStatus.OK).json({
+        success: true,
+        payload: recentGame,
+      }) : res.status(HttpStatus.NOT_FOUND).json({ success: false });
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        success: false,
+        message: error.code || error.message,
+      });
+    }
+  }
+
   @Post('create')
   @UsePipes(new ValidationPipe({ transform: true }))
   async createGame(@Response() res: any, @Body() game: Game): Promise<Game> {
     try {
       await getManager().transaction(async transactionalEntityManager => {
-        console.log(game);
         const newGame = await transactionalEntityManager.save(game);
         const categoriesData = data.map(dataItem => {
           const category = new Category();
@@ -115,17 +131,11 @@ export class GameController {
       const gameById = await this.gameService.getGameById(gameId);
       if (gameById) {
         gameById.isActive = isActive;
-        const updatedGame = await this.gameService.toggleGame(gameById);
-        const questions = await this.questionService.getQuestionsByGame(updatedGame);
-        const questionsWithAnswers = questions.map(async question => {
-          const answers = await this.answerService.getAnswersByQuestion(question);
-          question.answers = answers;
-          return question;
-        });
-        const awaitPromise = await Promise.all(questionsWithAnswers);
+        await this.gameService.toggleGame(gameById);
+        const game = await this.gameService.getGameWithQuestions(gameById.id);
         return res.status(HttpStatus.OK).json({
           success: true,
-          payload: awaitPromise,
+          payload: game,
         });
       } else {
         throw new Error('ER_NOT_FOUND');
