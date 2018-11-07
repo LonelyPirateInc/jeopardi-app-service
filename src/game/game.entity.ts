@@ -8,7 +8,7 @@ export class Game {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true, length: 500 })
+  @Column({ length: 500 })
   name: string;
 
   @Column()

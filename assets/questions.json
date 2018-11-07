@@ -223,5 +223,17 @@
         "isCorrect": true
       }]
     }]
+  },
+  {
+    "categoryName": "All In",
+    "questions": [{
+      "questionText": "Some Question Text",
+      "difficulty": 0,
+      "answers": [{
+        "answerText": "Some Answer Text",
+        "point": 10000,
+        "isCorrect": true
+      }]
+    }]
   }
 ]

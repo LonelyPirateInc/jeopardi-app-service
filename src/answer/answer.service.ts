@@ -20,28 +20,6 @@ export class AnswerService {
   }
 
   async getAnswersByQuestion(question: Question): Promise<Answer[]> {
-    return (await this.answerRepository.find({where: {questionId: question.id}}));
+    return (await this.answerRepository.find({where: { question }}));
   }
-
-  //   async getTeams(): Promise<Team[]> {
-  //     return await this.teamRepository.find();
-  //   }
-
-  //   async createTeam(team: Team): Promise<Team> {
-  //     return await this.teamRepository.save(team);
-  //   }
-
-  //   buildTeam(obj: any): Team {
-  //     const team = new Team();
-  //     team.name = obj.team.name;
-  //     return team;
-  //   }
-
-  //   async getTeamById(teamId: string): Promise<Team | boolean> {
-  //     const teamById = this.teamRepository.findOne(teamId);
-  //     if (teamById) {
-  //       return teamById;
-  //     }
-  //     return false;
-  //   }
 }

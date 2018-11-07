@@ -27,14 +27,24 @@ export class GameService {
       return (await this.gameRepository.findOne(game.id));
   }
 
-  async getExistingGame(): Promise<Game> {
+  async getExistingGame(): Promise<Game | boolean> {
     const games = await this.gameRepository.find({ order: { createdAt: 'DESC' } });
-    return games[0];
+    if (games && games[0]) {
+      const recentGame = games[0];
+      recentGame.questions = await this.getQuestionsWithAnswersByGame(recentGame);
+      return recentGame;
+    }
+    return false;
   }
 
   async getGameWithQuestions(gameId: string): Promise<Game> {
     const gameById = await this.gameRepository.findOne({ id: gameId });
-    const questionsForGame = await this.questionService.getQuestionsByGame(gameById);
+    gameById.questions = await this.getQuestionsWithAnswersByGame(gameById);
+    return gameById;
+  }
+
+  private async getQuestionsWithAnswersByGame(game: Game): Promise<Question[]> {
+    const questionsForGame = await this.questionService.getQuestionsByGame(game);
 
     const questionsWithAnswers = questionsForGame.map(async question => {
       const answers = await this.answerService.getAnswersByQuestion(question);
@@ -43,8 +53,6 @@ export class GameService {
       return question;
     });
 
-    const awaitQuestionsWithAnswers = await Promise.all(questionsWithAnswers);
-    gameById.questions = awaitQuestionsWithAnswers;
-    return gameById;
+    return await Promise.all(questionsWithAnswers);
   }
 }

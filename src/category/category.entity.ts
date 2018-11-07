@@ -19,6 +19,9 @@ export class Category {
   @Column({unique: true})
   categoryText: string;
 
+  @Column()
+  isAllIn: boolean = false;
+
   @CreateDateColumn()
   createdAt: string;
 

@@ -30,7 +30,6 @@ import * as data from '../../assets/questions.json';
 import { Category } from '../category/category.entity';
 import { QuestionService } from '../question/question.service';
 import { AnswerService } from '../answer/answer.service';
-import { promises } from 'fs';
 
 @Controller('game')
 export class GameController {
@@ -46,7 +45,6 @@ export class GameController {
   async getExistingGame(@Response() res: any): Promise<Score[]> {
     try {
       const recentGame = await this.gameService.getExistingGame();
-      // const isRecentGameActive = recentGame && recentGame.isActive;
       return recentGame ? res.status(HttpStatus.OK).json({
         success: true,
         payload: recentGame,
@@ -68,6 +66,7 @@ export class GameController {
         const categoriesData = data.map(dataItem => {
           const category = new Category();
           category.categoryText = dataItem.categoryName;
+          category.isAllIn = dataItem.categoryName === 'All In';
           return category;
         });
 
@@ -96,7 +95,7 @@ export class GameController {
 
         const answersData = questions.map(question => {
           const { answers } = question;
-          answers.forEach(answer => answer.questionId = question.id);
+          answers.forEach(answer => answer.question = question);
           return answers;
         });
 
@@ -104,11 +103,10 @@ export class GameController {
 
         return newGame;
       }).then(async newGame => {
-        const theGame = await getConnection().getRepository(Game).find(newGame);
-        const questions = await getConnection().getRepository(Question).find({where: {game: newGame}});
+        const gameWithQuestions = await this.gameService.getGameWithQuestions(newGame.id);
         return res.status(HttpStatus.OK).json({
           success: true,
-          payload: questions,
+          payload: gameWithQuestions,
         });
       });
     } catch (error) {
