@@ -26,9 +26,11 @@ export class ScoreController {
     @UsePipes(new ValidationPipe({ transform: true }))
      async create(@Response() res: any, @Body() answer: Answer) {
         try {
+
+            console.log(answer);
             return res.status(HttpStatus.OK).json({
                 success: true,
-                payload: res,
+                payload: answer,
             });
             // console.log(res);
             // await getManager().transaction(async transactionalEntityManager => {
