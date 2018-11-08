@@ -87,6 +87,7 @@ export class GameController {
             newQuestion.category = category;
             newQuestion.questionText = question.questionText;
             newQuestion.game = newGame;
+            newQuestion.musicPath = question.music;
             newQuestion.difficulty = question.difficulty;
             newQuestion.isActive = true;
             newQuestion.answers = question.answers.map(answerData => this.answerService.buildAnswerForQuestion(answerData));
