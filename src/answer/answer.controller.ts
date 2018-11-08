@@ -17,13 +17,14 @@ import { getManager } from 'typeorm';
 export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}
 
-
   @Post('submit/:gameId/:questionId')
   @UsePipes(new ValidationPipe({ transform: true }))
-   async submitAnswer(@Response() res: any,
-                      @Param('gameId') gameId: string,
-                      @Param('questionId') questionId: string,
-                      @Body() answerIds: any) {
+   async submitAnswer(
+     @Response() res: any,
+     @Param('gameId') gameId: string,
+     @Param('questionId') questionId: string,
+     @Body() answerIds: string[],
+  ) {
       try {
         console.log("answerIds", answerIds);
         // get answers by id 
