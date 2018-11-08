@@ -7,8 +7,10 @@ import { TeamService } from '../team/team.service';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import { getManager } from 'typeorm';
+import { Answer } from '../answer/answer.entity';
+import { Score } from './score.entity';
 
-@Controller('team')
+@Controller('score')
 export class ScoreController {
     constructor(
         private readonly teamService: TeamService,
@@ -20,23 +22,29 @@ export class ScoreController {
         return this.teamService.getTeams();
     }
 
-    @Post('register')
+    @Post('submit')
     @UsePipes(new ValidationPipe({ transform: true }))
-    async registerTeam(@Response() res: any, @Body() user: User): Promise<User> {
+     async create(@Response() res: any, @Body() answer: Answer) {
         try {
-            await getManager().transaction(async transactionalEntityManager => {
-                const team = new Team();
-                team.name = user.team.name;
-                user.team = await transactionalEntityManager.save(team);
-                user.password = await this.userService.getHash(user.password);
-                const newUser = await transactionalEntityManager.save(user);
-                delete newUser.password;
-                return res.status(HttpStatus.OK).json({
-                    success: true,
-                    payload: newUser,
-                });
+            return res.status(HttpStatus.OK).json({
+                success: true,
+                payload: res,
             });
+            // console.log(res);
+            // await getManager().transaction(async transactionalEntityManager => {
+            //     const team = new Team();
+            //     team.name = user.team.name;
+            //     user.team = await transactionalEntityManager.save(team);
+            //     user.password = await this.userService.getHash(user.password);
+            //     const newUser = await transactionalEntityManager.save(user);
+            //     delete newUser.password;
+            //     return res.status(HttpStatus.OK).json({
+            //         success: true,
+            //         payload: newUser,
+            //     });
+            // });
         } catch (error) {
+            console.log(error);
             return res.status(HttpStatus.BAD_REQUEST).json({
                 success: false,
                 message: error.code,

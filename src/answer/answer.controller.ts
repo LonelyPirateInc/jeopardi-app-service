@@ -21,6 +21,9 @@ export class AnswerController {
   //     return this.teamService.getTeams();
   // }
 
+
+
+
   // @Post('register')
   // @UsePipes(new ValidationPipe({ transform: true }))
   // async registerTeam(@Response() res: any, @Body() user: User): Promise<User> {
