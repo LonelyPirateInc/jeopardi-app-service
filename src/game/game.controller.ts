@@ -160,30 +160,27 @@ export class GameController {
     @Body('team') team: Team,
   ): Promise<boolean> {
     try {
-      const gameById = await this.gameService.getGameById(gameId);
-
-      const scores = answers.map(answer => {
-        const score = new Score();
-        score.point = answer.point;
-        score.team = team;
-        score.game = gameById;
-        return score;
-      });
+      const points = answers.reduce((initialPoint, answer) => {
+        return initialPoint + answer.point;
+      }, 0);
 
       await getManager().transaction(async transactionalEntityManager => {
-        await transactionalEntityManager.save(scores);
-        const questionIds = [];
-        const questions = questionIds.map(async id => {
-          const question = await transactionalEntityManager.findOne(Question, {id});
-          question.isActive = false;
-          return question;
-        });
+        const gameById = await this.gameService.getGameById(gameId);
 
-        await transactionalEntityManager.save(scores);
+        const score = new Score();
+        score.point = points;
+        score.team = team;
+        score.game = gameById;
+        await transactionalEntityManager.save(score);
+
+        const question = await transactionalEntityManager.findOne(Question, { id: questionId });
+        question.isActive = false;
+
+        await transactionalEntityManager.save(question);
 
         return res.status(HttpStatus.OK).json({
           success: true,
-          payload: questions,
+          payload: score,
         });
       });
 
