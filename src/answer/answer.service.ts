@@ -22,4 +22,9 @@ export class AnswerService {
   async getAnswersByQuestion(question: Question): Promise<Answer[]> {
     return (await this.answerRepository.find({where: { question }}));
   }
+
+
+  async getAnswersById(answerIds: string[]): Promise<Answer[]> {
+    return (await this.answerRepository.createQueryBuilder("Answer").where("Answer.id IN (:answerIds)", { answerIds }).getMany() );
+  }
 }
