@@ -16,6 +16,7 @@ export class EventsGateway {
 
   @SubscribeMessage('events')
   onEvent(client, data): Observable<WsResponse<number>> {
+    console.log('events...?');
     return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
   }
 }
