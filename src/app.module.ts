@@ -29,6 +29,7 @@ import { GameService } from './game/game.service';
 import { QuestionService } from './question/question.service';
 import { AnswerService } from './answer/answer.service';
 import { ScoreService } from './score/score.service';
+import { EventsModule } from 'events/events.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { ScoreService } from './score/score.service';
     QuestionModule,
     AnswerModule,
     CategoryModule,
+    EventsModule,
   ],
   controllers: [
     AppController,
