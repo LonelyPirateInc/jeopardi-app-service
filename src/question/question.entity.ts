@@ -17,8 +17,11 @@ export class Question {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-  @Column({ length: 500 })
+    @Column({ length: 500 })
     questionText: string;
+
+    @Column({ length: 500 })
+    musicPath: string;
 
     @Column()
     difficulty: number;
