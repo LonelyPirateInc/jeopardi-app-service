@@ -24,8 +24,9 @@ export class EventsGateway {
   }
 
   @SubscribeMessage('questionSelected')
-  onQuestionSelected(client, data): Observable<WsResponse<number>> {
-    console.log('data', data);
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  onQuestionSelected(client, data): Observable<WsResponse<any>> {
+    // console.log('data', data);
+    // return { event: 'questionSelected', data };
+    return from([data]).pipe(map(item => ({ event: 'questionSelected', data: item })));
   }
 }
