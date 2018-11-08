@@ -16,17 +16,11 @@ export class EventsGateway {
 
   @SubscribeMessage('events')
   onEvent(client, data): Observable<WsResponse<number>> {
-    console.log('events...?');
-
-    // console.log('client', client);
-    console.log('data', data);
     return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
   }
 
   @SubscribeMessage('questionSelected')
-  onQuestionSelected(client, data): Observable<WsResponse<any>> {
-    // console.log('data', data);
-    // return { event: 'questionSelected', data };
-    return from([data]).pipe(map(item => ({ event: 'questionSelected', data: item })));
+  onQuestionSelected(clients, data): void {
+    this.server.emit('questionSelected', data);
   }
 }
