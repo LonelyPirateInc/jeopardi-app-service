@@ -7,6 +7,7 @@ import {
     Body,
     UsePipes,
     ValidationPipe,
+    Param,
 } from '@nestjs/common';
 import { Answer } from './answer.entity';
 import { AnswerService } from './answer.service';
@@ -16,40 +17,37 @@ import { getManager } from 'typeorm';
 export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}
 
-  // @Get()
-  // findAll(): Promise<Team[]> {
-  //     return this.teamService.getTeams();
-  // }
 
-
-  @Post('submit')
+  @Post('submit/:gameId/:questionId')
   @UsePipes(new ValidationPipe({ transform: true }))
-   async submitAnswer(@Response() res: any, @Body() answerIds: string[]) {
+   async submitAnswer(@Response() res: any,
+                      @Param('gameId') gameId: string,
+                      @Param('questionId') questionId: string,
+                      @Body() answerIds: any) {
       try {
+        console.log("answerIds", answerIds);
         // get answers by id 
         const answers = await this.answerService.getAnswersById(answerIds);
         console.log(answers);
 
+        // get teamId of user
+        
 
+        // fetch the current score of the team by teamId and gameId
+        // const score = await this.scoreService.getScoresByTeamAndGameId(gameId, teamId);
+
+
+        // calcualte score based on answers
+
+
+        // upsert score 
+
+          // return new score 
           return res.status(HttpStatus.OK).json({
               success: true,
-              payload: 'a',
+              payload: 'newScore',
           });
-          // console.log(res);
-          // await getManager().transaction(async transactionalEntityManager => {
-          //     const team = new Team();
-          //     team.name = user.team.name;
-          //     user.team = await transactionalEntityManager.save(team);
-          //     user.password = await this.userService.getHash(user.password);
-          //     const newUser = await transactionalEntityManager.save(user);
-          //     delete newUser.password;
-          //     return res.status(HttpStatus.OK).json({
-          //         success: true,
-          //         payload: newUser,
-          //     });
-          // });
       } catch (error) {
-          console.log(error);
           return res.status(HttpStatus.BAD_REQUEST).json({
               success: false,
               message: error.code,
@@ -57,30 +55,4 @@ export class AnswerController {
       }
   }
 
-
-
-
-  // @Post('register')
-  // @UsePipes(new ValidationPipe({ transform: true }))
-  // async registerTeam(@Response() res: any, @Body() user: User): Promise<User> {
-  //     try {
-  //         await getManager().transaction(async transactionalEntityManager => {
-  //             const team = new Team();
-  //             team.name = user.team.name;
-  //             user.team = await transactionalEntityManager.save(team);
-  //             user.password = await this.userService.getHash(user.password);
-  //             const newUser = await transactionalEntityManager.save(user);
-  //             delete newUser.password;
-  //             return res.status(HttpStatus.OK).json({
-  //                 success: true,
-  //                 payload: newUser,
-  //             });
-  //         });
-  //     } catch (error) {
-  //         return res.status(HttpStatus.BAD_REQUEST).json({
-  //             success: false,
-  //             message: error.code,
-  //         });
-  //     }
-  // }
 }

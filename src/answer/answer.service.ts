@@ -25,7 +25,6 @@ export class AnswerService {
 
 
   async getAnswersById(answerIds: string[]): Promise<Answer[]> {
-    console.log("answerIds", answerIds);
-    return (await this.answerRepository.find({where: { id: answerIds }}));
+    return (await this.answerRepository.createQueryBuilder("Answer").where("Answer.id IN (:answerIds)", { answerIds }).getMany() );
   }
 }
