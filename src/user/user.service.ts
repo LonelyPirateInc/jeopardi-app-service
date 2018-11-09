@@ -34,9 +34,6 @@ export class UserService {
         const newUser = new User();
         newUser.username = userName;
         newUser.userType = 'player';
-        // user.password = await this.getHash(user.password);
-
-        // clear password as we don't persist passwords
         return this.userRepository.save(newUser);
     }
 
