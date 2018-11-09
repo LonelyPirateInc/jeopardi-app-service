@@ -22,20 +22,20 @@ export class EventsGateway {
 
 
   @SubscribeMessage('showQuestion')
-  onShowQuestion(client, data): Observable<WsResponse<number>> {
-    this.server.emit({ event: 'showQuestion', data });
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  onShowQuestion(client, question: any): void {
+    this.server.emit({ event: 'showQuestion', question });
   }
 
   @SubscribeMessage('showAnswers')
-  onShowMusic(client, data): Observable<WsResponse<number>> {
-    this.server.emit({ event: 'showAnswers', data });
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  onShowMusic(client, answers): void {
+    this.server.emit({ event: 'showAnswers', answers });
   }
 
   @SubscribeMessage('musicStart')
-  onMusicStart(client, data): Observable<WsResponse<number>> {
-    this.server.emit({event: 'musicStart', data});
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  onMusicStart(client, data): void {
+    const musicSwitch = {
+      isMusicOn: true,
+    };
+    this.server.emit({ event: 'musicStart', musicSwitch});
   }
 }
