@@ -1,5 +1,5 @@
 import {
-  Controller, Post, HttpStatus, Get, Response, Body, UsePipes, ValidationPipe,
+  Controller, Post, HttpStatus, Get, Put, Response, Body, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 
 import { getManager } from 'typeorm';
@@ -21,4 +21,43 @@ export class UserController {
   findAll(): Promise<User[]> {
     return this.userService.getUsers();
   }
+
+
+  @Post('register')
+  async create(@Response() res: any, @Body() body: any) {
+      if (!body.userName) {
+          return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username is required!' });
+      }
+
+      let user = await this.userService.getUserByUsername(body.userName);
+
+      if (user) {
+          return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username exists' });
+      } else {
+          user = await this.userService.createUser(body.userName);
+          if (user) {
+              user.password = undefined;
+          }
+      }
+
+      return res.status(HttpStatus.OK).json(user);
+  }
+
+
+  @Put('joinTeam')
+  async putUserTeam(@Response() res: any, @Body() body: any) {
+      if (!body.userName) {
+          return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username is missing!' });
+      }
+      await getManager().transaction(async transactionalEntityManager => {
+        const user = await this.userService.getUserByUsername(body.userName);
+        user.team = body.teamId;
+        const updatedUser = await transactionalEntityManager.save(User, user);
+        return res.status(HttpStatus.OK).json({
+          success: true,
+          payload: updatedUser,
+        });
+      });
+  }
+
 }

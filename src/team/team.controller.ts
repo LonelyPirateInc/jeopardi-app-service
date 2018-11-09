@@ -27,8 +27,6 @@ export class TeamController {
             await getManager().transaction(async transactionalEntityManager => {
                 const team = new Team();
                 team.name = user.team.name;
-                user.team = await transactionalEntityManager.save(team);
-                user.password = await this.userService.getHash(user.password);
                 const newUser = await transactionalEntityManager.save(user);
                 delete newUser.password;
                 return res.status(HttpStatus.OK).json({
