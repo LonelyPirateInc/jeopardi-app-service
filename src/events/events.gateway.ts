@@ -8,9 +8,9 @@ import {
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@WebSocketGateway(8083)
+@WebSocketGateway(8080)
 export class EventsGateway {
-  @WebSocketServer() public server;
+  @WebSocketServer() server;
 
   messages = [];
 
@@ -20,15 +20,16 @@ export class EventsGateway {
     return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
   }
 
-
   @SubscribeMessage('showQuestion')
   onShowQuestion(client, question: any): void {
-    this.server.emit({ event: 'showQuestion', question });
+    console.log('getting event showQuestion...');
+    this.server.emit('showQuestion', question);
+    // this.server.emit({ event: 'showQuestion', question });
   }
 
   @SubscribeMessage('showAnswers')
   onShowMusic(client, answers): void {
-    this.server.emit({ event: 'showAnswers', answers });
+    this.server.emit('showAnswers', answers);
   }
 
   @SubscribeMessage('musicStart')
@@ -36,6 +37,6 @@ export class EventsGateway {
     const musicSwitch = {
       isMusicOn: true,
     };
-    this.server.emit({ event: 'musicStart', musicSwitch});
+    this.server.emit('musicStart', data);
   }
 }
