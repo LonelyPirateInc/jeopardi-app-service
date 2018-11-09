@@ -40,7 +40,10 @@ export class UserController {
           }
       }
 
-      return res.status(HttpStatus.OK).json(user);
+      return res.status(HttpStatus.OK).json({
+        success: true,
+        payload: user,
+      });
   }
 
 
