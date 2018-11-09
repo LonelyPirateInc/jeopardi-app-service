@@ -16,8 +16,12 @@ export class TeamController {
     ) {}
 
     @Get()
-    findAll(): Promise<Team[]> {
-        return this.teamService.getTeams();
+    async findAll(@Response() res: any): Promise<Team[]> {
+        const teams = await this.teamService.getTeams();
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            payload: teams,
+        });
     }
 
     @Post('register')
