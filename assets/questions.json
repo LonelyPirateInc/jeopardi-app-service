@@ -111,7 +111,7 @@
     "questions": [{
         "questionText": "For which situations should you be positioning 6500 RLS to your customer?  Select ALL that apply.",
         "musicName": "Queen - Under Pressure.mp3",
-        "musicPathName": "queenUnderPressure.mp3",
+        "musicNamePath": "queenUnderPressure.mp3",
         "length": 30,
         "difficulty": 0,
         "answers": [{
@@ -149,7 +149,7 @@
       {
         "questionText": "You are competing against Nokia and Infinera in your account, each of which can offer C-band solutions today that can be upgraded to L-band in future. Your customer is leasing fiber, and wants to move forward with INFN or NOK to future-proof their network.  How should you respond?  (Choose the SINGLE best option)",
         "musicName": "Metallica - Enter Sandman.mp3",
-        "musicPathName": "metallicaEnterSandman.mp3",
+        "musicNamePath": "metallicaEnterSandman.mp3",
         "length": 31,
         "difficulty": 1,
         "answers": [{
@@ -182,7 +182,7 @@
       {
         "questionText": "Your customer wants you to bid an open line system so that they have the flexibility of deploying any vendor’s coherent transponders on the network. You know that lowest first-in cost is key criteria for this long-time 6500 customer. Select the TWO best options for this scenario.",
         "musicName": "Eddie Money - Take Me Home TonightBe My Baby.mp3",
-        "musicPathName": "eddieMoneyTakeMeHomeTonightBeMyBaby.mp3",
+        "musicNamePath": "eddieMoneyTakeMeHomeTonightBeMyBaby.mp3",
         "length": 40,
         "difficulty": 2,
         "answers": [{
@@ -219,7 +219,7 @@
     "questions": [{
         "questionText": "My customer is interested in T-Series, but requires greater than 100G DWDM. Which options should I position? Select ALL that apply.",
         "musicName": "Ed Sheeran - Shape of You.mp3",
-        "musicPathName": "edSheeranShapeofYou.mp3",
+        "musicNamePath": "edSheeranShapeofYou.mp3",
         "length": 25,
         "difficulty": 0,
         "answers": [{
@@ -252,7 +252,7 @@
       {
         "questionText": "My customer is very interested in the Groove G30 for it’s diversity of features and configuration.  What capabilities should I position in 2019 to compete? Select ALL that apply.",
         "musicName": "Blue Oyster Cult - The Reaper.mp3",
-        "musicPathName": "blueOysterCultTheReaper.mp3",
+        "musicNamePath": "blueOysterCultTheReaper.mp3",
         "length": 47,
         "difficulty": 1,
         "answers": [{
@@ -285,7 +285,7 @@
       {
         "questionText": "My customer requires low cost, lower capacity OTN switching with coherent DWDM, and Cisco is bidding the 2xCFP2-ACO crossponder in the NCS 2000 pizzabox platform. What can I position? Select ALL that apply.",
         "musicName": "ACDC - You Shook Me All Night Long.mp3",
-        "musicPathName": "aCDCYouShookMeAllNightLong.mp3",
+        "musicNamePath": "aCDCYouShookMeAllNightLong.mp3",
         "length": 30,
         "difficulty": 2,
         "answers": [{
@@ -322,7 +322,7 @@
     "questions": [{
         "questionText": "When Ciena introduces Wavelogic 5 Extreme at the end of 2019 - what are the main benefits of this technology? Select ALL that apply.",
         "musicName": "Calvin Harris, Dua Lipa - One Kiss.mp3",
-        "musicPathName": "calvinHarrisDuaLipaOneKiss.mp3",
+        "musicNamePath": "calvinHarrisDuaLipaOneKiss.mp3",
         "length": 30,
         "difficulty": 0,
         "answers": [{
@@ -356,7 +356,7 @@
       {
         "questionText": "How can you leverage Ciena’s strength and optical position in your account to expand business with Ciena? Select ALL that apply.",
         "musicName": "Meat Loaf - I'd Do Anything for Love.mp3",
-        "musicPathName": "meatLoafIdDoAnythingforLove.mp3",
+        "musicNamePath": "meatLoafIdDoAnythingforLove.mp3",
         "length": 35,
         "difficulty": 1,
         "answers": [{
@@ -390,7 +390,7 @@
       {
         "questionText": "How can you “Change the Game” in bid responses to win into new accounts? Select ALL that apply.",
         "musicName": "Guns N' Roses - Sweet Child O' Mine.mp3",
-        "musicPathName": "gunsNRosesSweetChildOMine.mp3",
+        "musicNamePath": "gunsNRosesSweetChildOMine.mp3",
         "length": 31,
         "difficulty": 2,
         "answers": [{
@@ -426,7 +426,7 @@
     "questions": [{
       "questionText": "What is Ciena’s differentiating value prop as an optical network solutions provider? Choose the SINGLE best response.",
       "musicName": "2020",
-      "musicPathName": "unitedStates2020.mp3",
+      "musicNamePath": "unitedStates2020.mp3",
       "length": 31,
       "difficulty": 0,
       "answers": [{
