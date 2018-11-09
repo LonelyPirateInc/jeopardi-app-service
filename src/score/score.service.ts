@@ -9,6 +9,11 @@ export class ScoreService {
         @InjectRepository(Score) private readonly scoreRepository: Repository<Score>,
     ) {}
 
+
+    async getScores(): Promise<Score[]> {
+        return await this.scoreRepository.find();
+    }
+
     
     // async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score> {
     //     return (await this.scoreRepository.find({where:  { teamId , gameId } }));

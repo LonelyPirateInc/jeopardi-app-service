@@ -8,6 +8,7 @@ import {
     UsePipes,
     ValidationPipe,
     Param,
+    Delete,
 } from '@nestjs/common';
 // import { getConnection } from 'typeorm';
 

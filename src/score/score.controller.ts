@@ -9,17 +9,23 @@ import { User } from '../user/user.entity';
 import { getManager } from 'typeorm';
 import { Answer } from '../answer/answer.entity';
 import { Score } from './score.entity';
+import { ScoreService } from './score.service';
 
 @Controller('score')
 export class ScoreController {
     constructor(
         private readonly teamService: TeamService,
         private readonly userService: UserService,
+        private readonly scoreService: ScoreService,
     ) {}
 
     @Get()
-    findAll(): Promise<Team[]> {
-        return this.teamService.getTeams();
+    async findAll(@Response() res: any): Promise<any[]> {
+        const scores = await this.scoreService.getScores();
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            payload: scores,
+          });
     }
 
     // @Post('submit')
