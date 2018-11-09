@@ -21,7 +21,10 @@ export class Question {
     questionText: string;
 
     @Column({ length: 500 })
-    musicPath: string;
+    musicName: string;
+
+    @Column({ length: 500 })
+    musicNamePath: string;
 
     @Column()
     difficulty: number;
