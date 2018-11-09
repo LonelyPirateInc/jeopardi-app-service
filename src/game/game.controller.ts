@@ -80,9 +80,9 @@ export class GameController {
         }
 
         const categories = await transactionalEntityManager.find(Category);
-        const questionsData = categories.map(category => data
+        const questionsData = categories.map((category: Category) => data
           .filter(dataItem => dataItem.categoryName === category.categoryText)
-          .map(dataItem => dataItem.questions.map(question => {
+          .map((dataItem: {categoryName: string, questions: any[]}) => dataItem.questions.map((question: Question) => {
             const newQuestion = new Question();
             newQuestion.category = category;
             newQuestion.questionText = question.questionText;
