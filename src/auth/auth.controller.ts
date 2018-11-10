@@ -44,7 +44,7 @@ export class AuthController {
         if (user) {
             return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username exists' });
         } else {
-            user = await this.userService.createUser(body);
+            user = await this.userService.createUser(body.username);
             if (user) {
                 user.password = undefined;
             }
