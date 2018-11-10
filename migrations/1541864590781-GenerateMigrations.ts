@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class GenerateMigrations1541773568657 implements MigrationInterface {
+export class GenerateMigrations1541864590781 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query("CREATE TABLE `category` (`id` int NOT NULL AUTO_INCREMENT, `categoryText` varchar(255) NOT NULL, `isAllIn` tinyint NOT NULL, `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), UNIQUE INDEX `IDX_be372bd61202b74f6339e10407` (`categoryText`), PRIMARY KEY (`id`)) ENGINE=InnoDB");
