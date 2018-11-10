@@ -17,14 +17,19 @@ export class AuthController {
         }
 
         const user: User = await this.userService.getUserByUsername(body.username);
-        if (user) {
-            if (await this.userService.compareHash(body.password, user.password)) {
-                const token = await this.authService.createToken(user);
-                return res.status(HttpStatus.OK).json({
-                    success: true,
-                    payload: token,
-                });
-            }
+        if (user && user.password === body.password) {
+            delete user.password;
+            return res.status(HttpStatus.OK).json({
+                success: true,
+                payload: user,
+            });
+            // if (await this.userService.compareHash(body.password, user.password)) {
+            //     const token = await this.authService.createToken(user);
+            //     return res.status(HttpStatus.OK).json({
+            //         success: true,
+            //         payload: token,
+            //     });
+            // }
         }
 
         return res.status(HttpStatus.FORBIDDEN).json({
