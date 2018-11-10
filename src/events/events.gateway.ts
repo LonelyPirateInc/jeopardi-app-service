@@ -8,7 +8,7 @@ import {
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@WebSocketGateway(8080)
+@WebSocketGateway(process.env.SOCKET_PORT)
 export class EventsGateway {
   @WebSocketServer() server;
 
@@ -16,15 +16,12 @@ export class EventsGateway {
 
   @SubscribeMessage('events')
   onEvent(client, data): Observable<WsResponse<number>> {
-    console.log('events...?');
     return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
   }
 
   @SubscribeMessage('showQuestion')
   onShowQuestion(client, question: any): void {
-    console.log('getting event showQuestion...');
     this.server.emit('showQuestion', question);
-    // this.server.emit({ event: 'showQuestion', question });
   }
 
   @SubscribeMessage('showAnswers')
