@@ -80,14 +80,15 @@ export class GameController {
         }
 
         const categories = await transactionalEntityManager.find(Category);
-        const questionsData = categories.map(category => data
+        const questionsData = categories.map((category: Category) => data
           .filter(dataItem => dataItem.categoryName === category.categoryText)
-          .map(dataItem => dataItem.questions.map(question => {
+          .map((dataItem: {categoryName: string, questions: any[]}) => dataItem.questions.map((question: Question) => {
             const newQuestion = new Question();
             newQuestion.category = category;
             newQuestion.questionText = question.questionText;
             newQuestion.game = newGame;
-            newQuestion.musicPath = question.music;
+            newQuestion.musicNamePath = question.musicNamePath;
+            newQuestion.musicName = question.musicName;
             newQuestion.difficulty = question.difficulty;
             newQuestion.isActive = true;
             newQuestion.answers = question.answers.map(answerData => this.answerService.buildAnswerForQuestion(answerData));
