@@ -13,16 +13,20 @@ import { ScoreService } from './score.service';
 
 @Controller('score')
 export class ScoreController {
-  constructor(
-    private readonly scoreService: ScoreService,
-    private readonly teamService: TeamService,
-    // private readonly userService: UserService,
-  ) {}
+    constructor(
+        private readonly teamService: TeamService,
+        private readonly userService: UserService,
+        private readonly scoreService: ScoreService,
+    ) {}
 
-  @Get()
-  findAll(): Promise<Team[]> {
-    return this.teamService.getTeams();
-  }
+    @Get()
+    async findAll(@Response() res: any): Promise<any[]> {
+        const scores = await this.scoreService.getScores();
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            payload: scores,
+          });
+    }
 
   // @Post('submit')
   // @UsePipes(new ValidationPipe({ transform: true }))
