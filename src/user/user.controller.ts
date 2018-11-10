@@ -24,17 +24,17 @@ export class UserController {
 
 
   @Post('register')
-  async create(@Response() res: any, @Body() body: any) {
-      if (!body.userName) {
+  async create(@Response() res: any, @Body() body: { username: string, role: string}) {
+      if (!body.username) {
           return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username is required!' });
       }
 
-      let user = await this.userService.getUserByUsername(body.userName);
+      let user = await this.userService.getUserByUsername(body.username);
 
       if (user) {
           return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username exists' });
       } else {
-          user = await this.userService.createUser(body.userName);
+          user = await this.userService.createUser(body.username);
           if (user) {
               user.password = undefined;
           }
@@ -46,14 +46,13 @@ export class UserController {
       });
   }
 
-
   @Put('joinTeam')
   async putUserTeam(@Response() res: any, @Body() body: any) {
-      if (!body.userName) {
+      if (!body.username) {
           return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username is missing!' });
       }
       await getManager().transaction(async transactionalEntityManager => {
-        const user = await this.userService.getUserByUsername(body.userName);
+        const user = await this.userService.getUserByUsername(body.username);
         user.team = body.teamId;
         const updatedUser = await transactionalEntityManager.save(User, user);
         return res.status(HttpStatus.OK).json({

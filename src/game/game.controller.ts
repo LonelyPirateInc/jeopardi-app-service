@@ -27,6 +27,7 @@ import * as xorBy from 'lodash/xorBy';
 import * as flattenDepth from 'lodash/flattenDepth';
 
 import * as data from '../../assets/questions.json';
+import * as teamData from '../../assets/teams.json';
 import { Category } from '../category/category.entity';
 import { QuestionService } from '../question/question.service';
 import { AnswerService } from '../answer/answer.service';
@@ -38,7 +39,7 @@ export class GameController {
     private readonly gameService: GameService,
     private readonly questionService: QuestionService,
     private readonly answerService: AnswerService,
-    // private readonly scoreService: ScoreService,
+    private readonly scoreService: ScoreService,
   ) {}
 
   @Get()
@@ -66,6 +67,18 @@ export class GameController {
       // Somehow typeorm and my local mysql are not well-matched. So eager loading is not working properly.
       await getManager().transaction(async transactionalEntityManager => {
         const newGame = await transactionalEntityManager.save(game);
+        const teamsData = teamData.map((dataItem: { name: string }) => {
+          const team = new Team();
+          team.name = dataItem.name;
+          return team;
+        });
+
+        const existingTeams = await transactionalEntityManager.find(Team);
+        const newTeams = xorBy(existingTeams, teamsData, 'name');
+        if (newTeams && newTeams.length) {
+          await transactionalEntityManager.save(Team, newTeams);
+        }
+
         const categoriesData = data.map(dataItem => {
           const category = new Category();
           category.categoryText = dataItem.categoryName;
@@ -180,9 +193,14 @@ export class GameController {
 
         await transactionalEntityManager.save(question);
 
+        const scores = await transactionalEntityManager.find(Score, { where: { teamId: team.id, gameId } });
+        const totalPoint = scores.reduce((initial, scoreItem) => {
+          return scoreItem.point + initial;
+        }, 0);
+
         return res.status(HttpStatus.OK).json({
           success: true,
-          payload: score,
+          payload: totalPoint,
         });
       });
 
@@ -204,6 +222,31 @@ export class GameController {
       return res.status(HttpStatus.OK).json({
         success: true,
         payload: gameById.scores,
+      });
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        success: false,
+        message: error.code || error.message,
+      });
+    }
+  }
+
+  @Get(':gameId/:teamId')
+  async getGameScoreByTeamId(
+    @Response() res: any,
+    @Param('gameId') gameId: string,
+    @Param('teamId') teamId: string,
+  ): Promise<number> {
+    try {
+      let totalScore = 0;
+      const scoresByTeam = await this.scoreService.getScoresByTeamAndGameId(teamId, gameId);
+      if (scoresByTeam) {
+        totalScore = scoresByTeam.reduce((initial, score) => score.point + initial, totalScore);
+      }
+
+      return res.status(HttpStatus.OK).json({
+        success: true,
+        payload: totalScore,
       });
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
