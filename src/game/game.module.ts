@@ -7,6 +7,7 @@ import { TeamModule } from '../team/team.module';
 import { QuestionModule } from '../question/question.module';
 import { AnswerModule } from '../answer/answer.module';
 import { CategoryModule } from '../category/category.module';
+import { ScoreModule } from '../score/score.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CategoryModule } from '../category/category.module';
     QuestionModule,
     AnswerModule,
     CategoryModule,
+    ScoreModule,
   ],
   providers: [GameService],
   controllers: [GameController],
