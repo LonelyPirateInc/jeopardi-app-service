@@ -34,6 +34,7 @@ export class UserService {
         const newUser = new User();
         newUser.username = userName;
         newUser.userType = 'player';
+        newUser.password = await this.getHash('1234');
         return this.userRepository.save(newUser);
     }
 
