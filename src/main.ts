@@ -7,7 +7,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe());
     // app.enableCors({credentials: false});
     app.enableCors();
-    await app.listen(3000, process.env.INSTANCE_ADDRESS);
+    await app.listen(3000, process.env.SOCKET_ADDRESS);
 }
 bootstrap();
 // /**
