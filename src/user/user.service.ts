@@ -19,7 +19,6 @@ export class UserService {
     async getUserByUsername(username: string): Promise<User> {
         return this.userRepository.findOne({
             where: { username },
-            relations: ['facility'],
         });
     }
 
@@ -31,11 +30,11 @@ export class UserService {
         return await this.userRepository.findOne({ username });
     }
 
-    async createUser(user: User): Promise<User> {
-        user.password = await this.getHash(user.password);
-
-        // clear password as we don't persist passwords
-        return this.userRepository.save(user);
+    async createUser(userName: string): Promise<User> {
+        const newUser = new User();
+        newUser.username = userName;
+        newUser.userType = 'player';
+        return this.userRepository.save(newUser);
     }
 
     async getHash(password: string|undefined): Promise<string> {
