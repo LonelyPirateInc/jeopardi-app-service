@@ -35,4 +35,10 @@ export class QuestionService {
   async getQuestionsByGame(game: Game): Promise<Question[]> {
     return (await this.questionRepository.find({ where: {gameId: game.id} }));
   }
+
+  async toggleQuestion(question: Question): Promise<Question> {
+    await this.questionRepository.update(question.id, { isActive: question.isActive });
+    return await this.questionRepository.findOne(question.id);
+  }
+
 }

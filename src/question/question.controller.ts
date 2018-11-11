@@ -30,4 +30,27 @@ export class QuestionController {
             });
         }
     }
+
+    @Post('toggle/:questionId')
+    async toggleQuestionById(
+        @Response() res: any,
+        @Param('questionId') questionId: string,
+        @Body('isActive') isActive: boolean,
+    ): Promise<Question> {
+        try {
+            const question = await this.questionService.getQuestionById(questionId);
+            question.isActive = isActive;
+            const updatedQuestion = await this.questionService.toggleQuestion(question);
+            return res.status(HttpStatus.OK).json({
+                success: true,
+                payload: updatedQuestion,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                success: false,
+                message: error.code || error.message,
+            });
+        }
+    }
 }
