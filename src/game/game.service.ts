@@ -28,12 +28,11 @@ export class GameService {
   }
 
   async getExistingGame(): Promise<Game | boolean> {
-    const game = await this.gameRepository.findOne({ where: { isActive: true } });
-    console.log("game", game);
-    if (game ) {
-      // const recentGame = games[0];
-      game.questions = await this.getQuestionsWithAnswersByGame(game);
-      return game;
+    const games = await this.gameRepository.find({ order: { createdAt: 'DESC' } });
+    if (games && games[0]) {
+      const recentGame = games[0];
+      recentGame.questions = await this.getQuestionsWithAnswersByGame(recentGame);
+      return recentGame;
     }
     return false;
   }
