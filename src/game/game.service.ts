@@ -22,22 +22,24 @@ export class GameService {
     return (await this.gameRepository.findOne(gameId));
   }
 
-  async toggleGame(game: Game): Promise<Game> {
+  async toggleGame(game: Game): Promise<any> {
       await this.gameRepository.save(game);
-      return (await this.gameRepository.findOne(game.id));
+      // return (await this.gameRepository.findOne(game.id));
   }
 
   async getExistingGame(): Promise<Game | boolean> {
-    const games = await this.gameRepository.find({ order: { createdAt: 'DESC' } });
-    if (games && games[0]) {
-      const recentGame = games[0];
-      recentGame.questions = await this.getQuestionsWithAnswersByGame(recentGame);
-      return recentGame;
+    const game = await this.gameRepository.findOne({ where: { isActive: true } });
+    console.log("game", game);
+    if (game ) {
+      // const recentGame = games[0];
+      game.questions = await this.getQuestionsWithAnswersByGame(game);
+      return game;
     }
     return false;
   }
 
   async getGameWithQuestions(gameId: string): Promise<Game> {
+    console.log("gameId", gameId);
     const gameById = await this.gameRepository.findOne({ id: gameId });
     gameById.questions = await this.getQuestionsWithAnswersByGame(gameById);
     return gameById;
@@ -45,6 +47,7 @@ export class GameService {
 
   async getQuestionsWithAnswersByGame(game: Game): Promise<Question[]> {
     const questionsForGame = await this.questionService.getQuestionsByGame(game);
+    console.log("questionsForGame" , questionsForGame.length);
 
     const questionsWithAnswers = questionsForGame.map(async question => {
       const answers = await this.answerService.getAnswersByQuestion(question);
