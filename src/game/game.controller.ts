@@ -25,6 +25,8 @@ import { ScoreService } from 'score/score.service';
 import { Question } from '../question/question.entity';
 
 import * as xorBy from 'lodash/xorBy';
+import * as groupBy from 'lodash/groupBy';
+import * as forIn from 'lodash/forIn';
 import * as flattenDepth from 'lodash/flattenDepth';
 
 import * as data from '../../assets/questions.json';
@@ -213,16 +215,27 @@ export class GameController {
     }
   }
 
-  @Get('scores/:gameId')
+  @Get(':gameId/scores')
   async getScoresByGameId(
     @Response() res: any,
     @Param('gameId') gameId: string,
-  ): Promise<Score[]> {
+  ): Promise<Team[]> {
     try {
-      const gameById = await this.gameService.getGameById(gameId);
+      // const gameById = await this.gameService.getGameById(gameId);
+      const gameScores = await this.scoreService.getScoresByGameId(gameId);
+      const scoresSortedByTeam = groupBy(gameScores, score => score.team.id);
+      const keys = Object.keys(scoresSortedByTeam);
+
+      const teamsWithScore = keys.map(key => {
+        let totalPoint = 0;
+        const scores = scoresSortedByTeam[key];
+        const { team } = scores[0];
+        team['point'] = scores.reduce((initial, score) => initial + score.point, totalPoint);
+        return team;
+      });
       return res.status(HttpStatus.OK).json({
         success: true,
-        payload: gameById.scores,
+        payload: teamsWithScore,
       });
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
