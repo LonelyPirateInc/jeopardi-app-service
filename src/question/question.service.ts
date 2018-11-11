@@ -34,7 +34,7 @@ export class QuestionService {
 
   async getQuestionsByGame(game: Game): Promise<Question[]> {
     console.log("getQuestionsByGame", game.id);
-    return (await this.questionRepository.find({ where: { gameId: game.id }}));
+    return (await this.questionRepository.find({ where: { game_id: game.id } }));
   }
 
   async toggleQuestion(question: Question): Promise<Question> {
