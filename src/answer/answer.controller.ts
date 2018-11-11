@@ -26,13 +26,9 @@ export class AnswerController {
      @Body() answerIds: string[],
   ) {
       try {
-        console.log("answerIds", answerIds);
-        // get answers by id 
         const answers = await this.answerService.getAnswersById(answerIds);
-        console.log(answers);
 
         // get teamId of user
-        
 
         // fetch the current score of the team by teamId and gameId
         // const score = await this.scoreService.getScoresByTeamAndGameId(gameId, teamId);

@@ -33,8 +33,11 @@ export class QuestionService {
   }
 
   async getQuestionsByGame(game: Game): Promise<Question[]> {
-    console.log("getQuestionsByGame", game.id);
-    return (await this.questionRepository.find({ where: { game_id: game.id } }));
+    return (await this.questionRepository.createQueryBuilder('question')
+      .leftJoinAndSelect('question.category', 'category')
+      .where('question.game_id = :game_id', {game_id: game.id})
+      .getMany()
+    );
   }
 
   async toggleQuestion(question: Question): Promise<Question> {

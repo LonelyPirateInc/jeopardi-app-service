@@ -45,7 +45,7 @@ export class GameService {
     return gameById;
   }
 
-  private async getQuestionsWithAnswersByGame(game: Game): Promise<Question[]> {
+  async getQuestionsWithAnswersByGame(game: Game): Promise<Question[]> {
     const questionsForGame = await this.questionService.getQuestionsByGame(game);
     console.log("questionsForGame" , questionsForGame.length);
 
