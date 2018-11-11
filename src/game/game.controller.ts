@@ -110,8 +110,8 @@ export class GameController {
           })));
 
         const questions = flattenDepth(questionsData, 2);
+        console.log("questions", questions.length);
         await transactionalEntityManager.save(Question, questions);
-
         const answersData = questions.map(question => {
           const { answers } = question;
           answers.forEach(answer => answer.question = question);
@@ -145,18 +145,18 @@ export class GameController {
     @Body('isActive') isActive: boolean,
   ): Promise<Game> {
     try {
-      const game = await this.gameService.getGameById(gameId);
-      if (game) {
-        game.isActive = isActive;
-        await this.gameService.toggleGame(game);
-        // const game = await this.gameService.getGameWithQuestions(gameById.id);
-        return res.status(HttpStatus.OK).json({
-          success: true,
-          payload: game,
-        });
-      } else {
-        throw new Error('ER_NOT_FOUND');
-      }
+        const game = await this.gameService.getGameById(gameId);
+        if (game) {
+          game.isActive = isActive;
+          await this.gameService.toggleGame(game);
+  
+          return res.status(HttpStatus.OK).json({
+            success: true,
+            payload: game,
+          });
+        } else {
+          throw new Error('ER_NOT_FOUND');
+        }
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
         success: false,

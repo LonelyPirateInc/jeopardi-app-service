@@ -28,11 +28,12 @@ export class GameService {
   }
 
   async getExistingGame(): Promise<Game | boolean> {
-    const games = await this.gameRepository.find({ where: { isActive: true } , order: { createdAt: 'DESC' } });
-    if (games && games[0]) {
-      const recentGame = games[0];
-      recentGame.questions = await this.getQuestionsWithAnswersByGame(recentGame);
-      return recentGame;
+    const game = await this.gameRepository.findOne({ where: { isActive: true } });
+    console.log("game", game);
+    if (game ) {
+      // const recentGame = games[0];
+      game.questions = await this.getQuestionsWithAnswersByGame(game);
+      return game;
     }
     return false;
   }
@@ -46,6 +47,7 @@ export class GameService {
 
   private async getQuestionsWithAnswersByGame(game: Game): Promise<Question[]> {
     const questionsForGame = await this.questionService.getQuestionsByGame(game);
+    console.log("questionsForGame" , questionsForGame.length);
 
     const questionsWithAnswers = questionsForGame.map(async question => {
       const answers = await this.answerService.getAnswersByQuestion(question);
