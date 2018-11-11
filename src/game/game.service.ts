@@ -22,13 +22,13 @@ export class GameService {
     return (await this.gameRepository.findOne(gameId));
   }
 
-  async toggleGame(game: Game): Promise<Game> {
+  async toggleGame(game: Game): Promise<any> {
       await this.gameRepository.save(game);
-      return (await this.gameRepository.findOne(game.id));
+      // return (await this.gameRepository.findOne(game.id));
   }
 
   async getExistingGame(): Promise<Game | boolean> {
-    const games = await this.gameRepository.find({ order: { createdAt: 'DESC' } });
+    const games = await this.gameRepository.find({ where: { isActive: true } , order: { createdAt: 'DESC' } });
     if (games && games[0]) {
       const recentGame = games[0];
       recentGame.questions = await this.getQuestionsWithAnswersByGame(recentGame);
@@ -38,6 +38,7 @@ export class GameService {
   }
 
   async getGameWithQuestions(gameId: string): Promise<Game> {
+    console.log("gameId", gameId);
     const gameById = await this.gameRepository.findOne({ id: gameId });
     gameById.questions = await this.getQuestionsWithAnswersByGame(gameById);
     return gameById;

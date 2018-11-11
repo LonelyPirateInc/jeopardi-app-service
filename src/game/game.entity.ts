@@ -12,7 +12,7 @@ export class Game {
   name: string;
 
   @Column()
-  isActive: boolean = false;
+  isActive: boolean = true;
 
   @CreateDateColumn()
   createdAt: string;
