@@ -20,9 +20,7 @@ export class ScoreService {
           .getMany()
         );
     }
-    // async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score> {
-    //     return (await this.scoreRepository.find({where:  { teamId , gameId } }));
-    // }
+
     async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score[]> {
         return (await this.scoreRepository.createQueryBuilder('score')
           .where('score.gameId = :gameId', { gameId })
@@ -30,22 +28,4 @@ export class ScoreService {
           .getMany()
         );
     }
-
-  // async createTeam(team: Team): Promise<Team> {
-  //     return await this.teamRepository.save(team);
-  // }
-
-  // buildTeam(obj: any): Team {
-  //     const team = new Team();
-  //     team.name = obj.team.name;
-  //     return team;
-  // }
-
-  // async getTeamById(teamId: string): Promise<Team | boolean>{
-  //     const teamById = this.teamRepository.findOne(teamId);
-  //     if (teamById) {
-  //         return teamById;
-  //     }
-  //     return false;
-  // }
 }
