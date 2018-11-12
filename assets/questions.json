@@ -6,27 +6,33 @@
         "musicName": "Portugal. The Man - Feel It Still.mp3",
         "musicNamePath": "portugalTheManFeelItStill.mp3",
         "length": 31,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "No systems with AC1200 are available until at least 1Q2019; Acacia has missed their date many times.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "Position WaveLogic 5 Extreme as being a better solution for 50GHz gridded networks.",
             "point": -30000,
             "isCorrect": false
           },
           {
+            "index": 2,
             "answerText": "WaveLogic Ai provides volume-based savings, allowing it to still be very competitive.",
             "point": 30000,
             "isCorrect": true
           },
           {
+            "index": 3,
             "answerText": "Available end 2019, WL5e delivers 800G with a further leapfrog in economics and capacity.",
             "point": 20000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "Offer to buy lunch at the most expensive restaurant in the area.",
             "point": -20000,
             "isCorrect": false
@@ -39,32 +45,39 @@
         "musicName": "Michael Jackson - Thriller.mp3",
         "musicNamePath": "michaelJacksonThriller.mp3",
         "length": 34,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Ciena will offer 6500-S, 6500-T and Packet Networking devices w/ CFP2-DCO slots in 2019.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "Ciena plans to deliver QSFP-DD plugs to address 400ZR applications.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Ciena plans to deliver CFP8 plugs in 1Q2019 for faster time to market.",
             "point": -20000,
             "isCorrect": false
           },
           {
+            "index": 3,
             "answerText": "Ciena plans to deliver 400G in SFP+ pluggables.",
             "point": -20000,
             "isCorrect": false
           },
           {
+            "index": 4,
             "answerText": "Ciena will be offering coherent pluggables for outside plant deployments.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 5,
             "answerText": "Ciena will be offering CFP2-DCO pluggables mid-2019.",
             "point": 10000,
             "isCorrect": true
@@ -77,27 +90,33 @@
         "musicNamePath": "bornToBeMyBabyBonJovi.mp3",
         "length": 29,
         "difficulty": 2,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Agree. Coherent pluggables will be able to address all applications in the near term.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 1,
             "answerText": "Ciena will be offering coherent pluggables starting in Q2 2019.",
             "point": 20000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Deploying a switch/router anywhere you need transponders means a lot more $$$$.",
             "point": 30000,
             "isCorrect": true
           },
           {
+            "index": 3,
             "answerText": "Provide 90% discount on transport equipment.",
             "point": -50000,
             "isCorrect": false
           },
           {
+            "index": 4,
             "answerText": "The thinking that optical networks rely solely on specific FEC gains and power envelope metrics is greatly oversimplifying transport requirements.",
             "point": 40000,
             "isCorrect": true
@@ -115,31 +134,37 @@
         "length": 30,
         "difficulty": 0,
         "answers": [{
+          "index": 0,
             "answerText": "Greenfield opportunities starting mid-2019 and later.",
             "point": 10000, 
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "When customer needs more than 4 degrees of wavelength switching.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 2,
             "answerText": "When customer is expanding its 6500 network.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 3,
             "answerText": "For point-point DCI applications.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "For applications requiring compact footprint where 600mm depth is acceptable.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 5,
             "answerText": "For cost reduction versus 6500 photonics.",
             "point": -10000,
             "isCorrect": false
@@ -152,27 +177,33 @@
         "musicNamePath": "metallicaEnterSandman.mp3",
         "length": 31,
         "difficulty": 1,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "It is cheaper to build another C-band line system than upgrade to C+L.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 1,
             "answerText": "Deploy 6500 RLS C-band photonic line today with seamless upgrade to L-band next year.",
             "point": -20000,
             "isCorrect": false
           },
           {
+            "index": 2,
             "answerText": "Describe operational challenges of NOK/INFN solution; best to wait for RLS C&L.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 3,
             "answerText": "Describe operational and capacity inefficiencies of NOK/INFN solution; best to wait for RLS C&L.",
             "point": 20000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "Propose the Ciena 6500 S-Series C+L submarine hardware for their application.",
             "point": -20000,
             "isCorrect": false
@@ -185,27 +216,33 @@
         "musicNamePath": "eddieMoneyTakeMeHomeTonightBeMyBaby.mp3",
         "length": 40,
         "difficulty": 2,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "State that Ciena does not sell line systems without transponders.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 1,
             "answerText": "Quote a 6500 line system at slightly higher than typical line system margin, with SW licenses for future capacity additions.",
             "point": 20000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Position the 6500 RLS platform at typical line system margins.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 3,
             "answerText": "Quote a 6500 photonic line system at higher price/margins.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 4,
             "answerText": "Quote a 6500 line system at your customer’s typical line system margins, with a stipulation that 80% of the transponders are Ciena transponders.",
             "point": 20000,
             "isCorrect": true
@@ -222,27 +259,33 @@
         "musicNamePath": "edSheeranShapeofYou.mp3",
         "length": 25,
         "difficulty": 0,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Sell them the CoreDirector.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 1,
             "answerText": "Use 5xQSFP28 T-Series card with AOC cable to a 6500 WLAi MOTR.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Position the Z-Series with the WaveLogic 3 Nano-based PSW card.",
             "point": -10000,
             "isCorrect": false
           },
           {
+            "index": 3,
             "answerText": "Bid the 500G Universal Sub-Slot card with WaveLogic Ai pluggable modules.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "Walk Away.",
             "point": -10000,
             "isCorrect": false
@@ -255,27 +298,33 @@
         "musicNamePath": "blueOysterCultTheReaper.mp3",
         "length": 47,
         "difficulty": 1,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Waveserver Ai 400G data encryption, which is not available on the G30.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "400G economics for 10G services with the 10G multiplexer sled on Waveserver Ai.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Point out that Infinera has publicly stated they are implementing PIC on G30; future support and backwards compatibility for today’s G30 is uncertain.",
             "point": -30000,
             "isCorrect": false
           },
           {
+            "index": 3,
             "answerText": "Bid Waveserver Ai for dense DWDM mux/demux application.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "Best network economics today and for the near future.",
             "point": 10000,
             "isCorrect": true
@@ -288,27 +337,33 @@
         "musicNamePath": "aCDCYouShookMeAllNightLong.mp3",
         "length": 30,
         "difficulty": 2,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "6500-S8 with new QSFP28 PKT/OTN card mid-2019, connecting to WLAi MOTR via AOC cable.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "The Universal Sub-Slot card with 12 x SFP+ module on the T-Series offered mid-2019.",
             "point": -30000,
             "isCorrect": false
           },
           {
+            "index": 2,
             "answerText": "The 6500 S-Series 2X100G ADM on-a-blade with CFP2-DCO being offered mid-2019.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 3,
             "answerText": "The 6500 S-Series with CFP2-DCO PKT/OTN I/F card being released mid-2019.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "6500 RLS with 32 switching degrees in compact footprint available mid-2019.",
             "point": -40000,
             "isCorrect": false
@@ -325,27 +380,33 @@
         "musicNamePath": "calvinHarrisDuaLipaOneKiss.mp3",
         "length": 30,
         "difficulty": 0,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Industry leading capacity/wavelength at 800G for single-span DCI applications.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "400Gb/s+ economics for long haul applications.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Leading spectral efficiency and maximum wavelength capacity for subsea applications.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 3,
             "answerText": "Pluggable in a QSFP-DD.",
             "point": -30000,
             "isCorrect": false
           },
           {
+            "index": 4,
             "answerText": "It enables 80% reduction in cost/bit compared to WaveLogic Ai.",
             "point": -30000,
             "isCorrect": false
@@ -359,27 +420,33 @@
         "musicNamePath": "meatLoafIdDoAnythingforLove.mp3",
         "length": 35,
         "difficulty": 1,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Offer TDM evolution strategy and new Ethernet services using the 6500 PTS platform.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "Position Ciena’s new access portfolio with integrated pluggable coherent optics as your customers move towards deploying high capacity access architectures.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 2,
             "answerText": "Position combo of packet and optical in new platforms like 8180 and 5170 for end-end Ethernet business solution offering.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 3,
             "answerText": "Convince your customer to become a leading provider of new 400GbE services by leveraging Ciena’s industry leading 400G portfolio.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "Position Liquid Spectrum and BP MCP to help customers gain operational efficiencies to meet their profitability goals.",
             "point": 10000,
             "isCorrect": true
@@ -393,27 +460,33 @@
         "musicNamePath": "gunsNRosesSweetChildOMine.mp3",
         "length": 31,
         "difficulty": 2,
-        "answers": [{
+        "answers": [
+          {
+            "index": 0,
             "answerText": "Leverage programmability of WaveLogic Ai to get best cost per bit.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 1,
             "answerText": "Don’t charge anything for hardware and make it up with SW licenses.",
             "point": -20000,
             "isCorrect": false
           },
           {
+            "index": 2,
             "answerText": "Design to fewer but higher capacity channels to come in at lowest cost/Gig, leveraging Liquid Spectrum analytics apps.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 3,
             "answerText": "Leverage Layer 0 restoration to minimize transponder, and switch/router ports.",
             "point": 10000,
             "isCorrect": true
           },
           {
+            "index": 4,
             "answerText": "Sell the 6500 RLS base configuration with minimal software to win into new accounts, enabling future upsell on photonic SW features.",
             "point": 10000,
             "isCorrect": true
@@ -429,27 +502,33 @@
       "musicNamePath": "bonJoviLivinOnAPrayer.mp3",
       "length": 31,
       "difficulty": 0,
-      "answers": [{
+      "answers": [
+        {
+          "index": 0,
           "answerText": "Ciena is #1 or #2 in every optical networking category we play in.",
           "point": -200000,
           "isCorrect": false
         },
         {
+          "index": 1,
           "answerText": "Ciena has industry-leading coherent solutions.",
           "point": -200000,
           "isCorrect": false
         },
         {
+          "index": 2,
           "answerText": "Combo of coherent technology innovation + programmable HW + financial strength.",
           "point": 10000,
           "isCorrect": true
         },
         {
+          "index": 3,
           "answerText": "Combo of coherent technology innovation + programmable HW + virtualization.",
           "point": -200000,
           "isCorrect": false
         },
         {
+          "index": 4,
           "answerText": "Awesome people",
           "point": -200000,
           "isCorrect": false

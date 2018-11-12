@@ -10,24 +10,27 @@ import { Question } from '../question/question.entity';
 
 @Entity()
 export class Answer {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column({ length: 500, nullable: true})
-    answerText: string;
+  @Column({ length: 500, nullable: true })
+  answerText: string;
 
-    @Column()
-    point: number;
+  @Column()
+  point: number;
 
-    @Column({ default: false})
-    isCorrect: boolean;
+  @Column()
+  answerIndex: number;
 
-    @CreateDateColumn()
-    createdAt: string;
+  @Column({ default: false })
+  isCorrect: boolean;
 
-    @UpdateDateColumn()
-    updatedAt: string;
+  @CreateDateColumn()
+  createdAt: string;
 
-    @ManyToOne(type => Question)
-    question: Question;
+  @UpdateDateColumn()
+  updatedAt: string;
+
+  @ManyToOne(type => Question)
+  question: Question;
 }

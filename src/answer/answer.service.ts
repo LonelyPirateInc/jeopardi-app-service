@@ -13,6 +13,7 @@ export class AnswerService {
 
   public buildAnswerForQuestion(answerData: any): Answer {
     const answer = new Answer();
+    answer.answerIndex = answerData.index;
     answer.answerText = answerData.answerText;
     answer.isCorrect = answerData.isCorrect;
     answer.point = answerData.point;
