@@ -5,12 +5,16 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of, from, Observable } from 'rxjs';
+import { map, flatMap } from 'rxjs/operators';
+import { GameService } from 'game/game.service';
+import { Game } from 'game/game.entity';
 
 @WebSocketGateway(8080)
 export class EventsGateway {
   @WebSocketServer() server;
+
+  constructor(private readonly gameService: GameService) { }
 
   messages = [];
 
@@ -36,4 +40,10 @@ export class EventsGateway {
     };
     this.server.emit('musicStart', data);
   }
+
+  @SubscribeMessage('readyForGame')
+  onClientReadyForGame(client, data): Observable<WsResponse<boolean | Game>> {
+    return from(this.gameService.getExistingGame()).pipe(map((game) => ({event: 'gameCheckResult', data: game})));
+  }
+  // readyForGame
 }
