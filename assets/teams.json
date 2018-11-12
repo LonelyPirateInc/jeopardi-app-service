@@ -1,5 +1,6 @@
-[{
-    "name": "North American DTN-SU-X"
+[
+  {
+    "name": "DTN-SU-X NA"
   },
   {
     "name": "Scott North America"
@@ -8,19 +9,19 @@
     "name": "Greg North America"
   },
   {
-    "name": "Brandon North American"
+    "name": "Brandon NA"
   },
   {
     "name": "Richard EMEA"
   },
   {
-    "name": "Mark EMEA / India"
+    "name": "EMEA / India Lightspeed"
   },
   {
-    "name": "The Spectrum CALA/CORP"
+    "name": "The Spectrum CALA/CORP Team"
   },
   {
-    "name": "AT&T/GCN High Bandwidth Rock & Rollers"
+    "name": "AT&T/ GCN High Bandwidth Rock & Rollers"
   },
   {
     "name": "Phil Kiwi APJ"
@@ -53,7 +54,7 @@
     "name": "Marek North America"
   },
   {
-    "name": "WIN North America"
+    "name": "Kyle North America"
   },
   {
     "name": "Angelo North America"
@@ -65,10 +66,10 @@
     "name": "North American Network Ninjas"
   },
   {
-    "name": "Team Optical North American"
+    "name": "Team Optical NA "
   },
   {
-    "name": "NA Spectral Efficienados"
+    "name": "Everyone is Welcome EMEA"
   },
   {
     "name": "Arash North America"
