@@ -10,7 +10,10 @@ import { map, flatMap } from 'rxjs/operators';
 import { GameService } from 'game/game.service';
 import { Game } from 'game/game.entity';
 
-@WebSocketGateway(8080)
+@WebSocketGateway(8080, {
+  pingTimeout: 3000000,
+  pingInterval: 25000,
+})
 export class EventsGateway {
   @WebSocketServer() server;
 
