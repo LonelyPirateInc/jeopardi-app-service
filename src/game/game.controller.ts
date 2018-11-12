@@ -178,6 +178,12 @@ export class GameController {
     @Body('isAllInQuestion') isAllInQuestion: boolean,
   ): Promise<boolean> {
     try {
+      if (!answers.length) {
+        return res.status(HttpStatus.OK).json({
+          success: true,
+          payload: 0,
+        });
+      }
 
       if (isAllInQuestion) {
         // check if user selected JUST the right answer 
