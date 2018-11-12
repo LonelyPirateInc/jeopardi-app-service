@@ -206,7 +206,7 @@ export class GameController {
             newScore.game = gameById;
             await transactionalEntityManager.save(newScore);
   
-            const scores = await transactionalEntityManager.find(Score, { where: { teamId: team.id, gameId } });
+            const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
             const updatedScores = scores.map(score => {
               score.point = 0;
               return score;
@@ -228,7 +228,7 @@ export class GameController {
         } else {
           await getManager().transaction(async transactionalEntityManager => {
 
-            const scores = await transactionalEntityManager.find(Score, { where: { teamId: team.id, gameId } });
+          const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
             const currentTotalPoints = scores.reduce((initial, scoreItem) => {
               return scoreItem.point + initial;
             }, 0);
@@ -245,7 +245,7 @@ export class GameController {
             question.isActive = false;
             await transactionalEntityManager.save(question);
 
-            const newScores = await transactionalEntityManager.find(Score, { where: { teamId: team.id, gameId } });
+            const newScores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
             const newTotalPoints = newScores.reduce((initial, scoreItem) => {
               return scoreItem.point + initial;
             }, 0);
@@ -281,7 +281,7 @@ export class GameController {
   
           await transactionalEntityManager.save(question);
   
-          const scores = await transactionalEntityManager.find(Score, { where: { teamId: team.id, gameId } });
+          const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
           const totalPoint = scores.reduce((initial, scoreItem) => {
             return scoreItem.point + initial;
           }, 0);
