@@ -23,9 +23,13 @@ export class ScoreService {
     // async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score> {
     //     return (await this.scoreRepository.find({where:  { teamId , gameId } }));
     // }
-  async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score[]> {
-      return (await this.scoreRepository.find({where:  { teamId , gameId } }));
-  }
+    async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score[]> {
+        return (await this.scoreRepository.createQueryBuilder('score')
+          .where('score.gameId = :gameId', { gameId })
+          .andWhere('score.teamId = :teamId', { teamId })
+          .getMany()
+        );
+    }
 
   // async createTeam(team: Team): Promise<Team> {
   //     return await this.teamRepository.save(team);
