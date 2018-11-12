@@ -14,7 +14,11 @@ export class ScoreService {
     }
 
     async getScoresByGameId(gameId: string): Promise<Score[]> {
-        return await this.scoreRepository.find({ where: { gameId } });
+        return (await this.scoreRepository.createQueryBuilder('score')
+          .leftJoinAndSelect('score.team', 'team')
+          .where('score.gameId = :gameId', { gameId })
+          .getMany()
+        );
     }
     // async getScoresByTeamAndGameId(teamId: string, gameId: string): Promise<Score> {
     //     return (await this.scoreRepository.find({where:  { teamId , gameId } }));
