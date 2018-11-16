@@ -29,7 +29,13 @@ export class QuestionService {
   async getQuestionById(questionId: string): Promise<Question> {
     const question = await this.questionRepository.findOne(questionId);
     question.answers = await this.answerService.getAnswersByQuestion(question);
-    return question;
+    question.isCurrent = true;
+    console.log("quesiton" , question);
+
+
+    // TODO: WTF is wrong with this!!!!!!! FUCK THIS SHITJS!!!!
+    return await this.questionRepository.save(question);
+    // return question;
   }
 
   async getQuestionsByGame(game: Game): Promise<Question[]> {
@@ -46,7 +52,9 @@ export class QuestionService {
   }
 
   async getCurrentQuestion(): Promise<Question> {
-    const question = await this.questionRepository.findOne({ where: { isCurrent: true } }));
+    // const question = await this.questionRepository.findOne({ where: { isCurrent: true } }));
+    const question = await this.questionRepository.findOne({isCurrent: true });
+
     question.answers = await this.answerService.getAnswersByQuestion(question);
     return question;
   }

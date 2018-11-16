@@ -32,7 +32,7 @@ export class Question {
     @Column()
     isActive: boolean;
 
-    @Column()
+    @Column({ default: false })
     isCurrent: boolean;
 
     @CreateDateColumn()
