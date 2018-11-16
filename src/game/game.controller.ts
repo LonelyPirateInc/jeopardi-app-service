@@ -215,6 +215,7 @@ export class GameController {
 
             const question = await transactionalEntityManager.findOne(Question, { id: questionId });
             question.isActive = false;
+            question.isCurrent = false;
             await transactionalEntityManager.save(question);
 
             return res.status(HttpStatus.OK).json({
@@ -243,6 +244,7 @@ export class GameController {
 
             const question = await transactionalEntityManager.findOne(Question, { id: questionId });
             question.isActive = false;
+            question.isCurrent = false;
             await transactionalEntityManager.save(question);
 
             const newScores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
@@ -278,7 +280,8 @@ export class GameController {
   
           const question = await transactionalEntityManager.findOne(Question, { id: questionId });
           question.isActive = false;
-  
+          question.isCurrent = false;
+
           await transactionalEntityManager.save(question);
   
           const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);

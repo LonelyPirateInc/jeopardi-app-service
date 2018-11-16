@@ -32,6 +32,9 @@ export class Question {
     @Column()
     isActive: boolean;
 
+    @Column()
+    isCurrent: boolean;
+
     @CreateDateColumn()
     createdAt: string;
 

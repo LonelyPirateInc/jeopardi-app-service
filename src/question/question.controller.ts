@@ -19,6 +19,31 @@ export class QuestionController {
     ): Promise<Question> {
         try {
             const question = await this.questionService.getQuestionById(questionId);
+
+            await getManager().transaction(async transactionalEntityManager => {
+                question.isCurrent = true;
+                await transactionalEntityManager.save(Question, question);
+            });
+
+            return res.status(HttpStatus.OK).json({
+                success: true,
+                payload: question,
+            });
+        } catch (error) {
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                success: false,
+                message: error.code || error.message,
+            });
+        }
+    }
+
+
+    @Get('/currentQuestion')
+    async getCurrentQuestion(
+        @Response() res: any,
+    ): Promise<Question> {
+        try {
+            const question = await this.questionService.getCurrentQuestion();
             return res.status(HttpStatus.OK).json({
                 success: true,
                 payload: question,

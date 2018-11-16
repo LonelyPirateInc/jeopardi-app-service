@@ -45,4 +45,11 @@ export class QuestionService {
     return await this.questionRepository.findOne(question.id);
   }
 
+  async getCurrentQuestion(): Promise<Question> {
+    const question = await this.questionRepository.findOne({ where: { isCurrent: true } }));
+    question.answers = await this.answerService.getAnswersByQuestion(question);
+    return question;
+  }
+
+
 }
