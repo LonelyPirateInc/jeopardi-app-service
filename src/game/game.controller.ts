@@ -205,7 +205,6 @@ export class GameController {
             newScore.team = team;
             newScore.game = gameById;
             await transactionalEntityManager.save(newScore);
-  
             const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
             const updatedScores = scores.map(score => {
               score.point = 0;
@@ -222,73 +221,46 @@ export class GameController {
               success: true,
               payload: 0,
             });
-
-
           });
 
         } else {
           await getManager().transaction(async transactionalEntityManager => {
 
-          const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
-            const currentTotalPoints = scores.reduce((initial, scoreItem) => {
-              return scoreItem.point + initial;
-            }, 0);
-
+            const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
+            const currentTotalPoints = scores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
             const gameById = await this.gameService.getGameById(gameId);
-
             const score = new Score();
             score.point = currentTotalPoints;
             score.team = team;
             score.game = gameById;
             await transactionalEntityManager.save(score);
-
             const question = await transactionalEntityManager.findOne(Question, { id: questionId });
             question.isActive = false;
             question.isCurrent = false;
             await transactionalEntityManager.save(question);
-
             const newScores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
-            const newTotalPoints = newScores.reduce((initial, scoreItem) => {
-              return scoreItem.point + initial;
-            }, 0);
-
+            const newTotalPoints = newScores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
             return res.status(HttpStatus.OK).json({
               success: true,
               payload: newTotalPoints,
             });
-
           });
-
-
-
-
         }
-
       } else {
-        const points = answers.reduce((initialPoint, answer) => {
-          return initialPoint + answer.point;
-        }, 0);
-  
+        const points = answers.reduce((initialPoint, answer) => initialPoint + answer.point, 0);
         await getManager().transaction(async transactionalEntityManager => {
           const gameById = await this.gameService.getGameById(gameId);
-  
           const score = new Score();
           score.point = points;
           score.team = team;
           score.game = gameById;
           await transactionalEntityManager.save(score);
-  
           const question = await transactionalEntityManager.findOne(Question, { id: questionId });
           question.isActive = false;
           question.isCurrent = false;
-
           await transactionalEntityManager.save(question);
-  
           const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
-          const totalPoint = scores.reduce((initial, scoreItem) => {
-            return scoreItem.point + initial;
-          }, 0);
-  
+          const totalPoint = scores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
           return res.status(HttpStatus.OK).json({
             success: true,
             payload: totalPoint,

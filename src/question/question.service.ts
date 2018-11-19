@@ -47,11 +47,7 @@ export class QuestionService {
   }
 
   async getCurrentQuestion(): Promise<Question> {
-    const question = await this.questionRepository.findOne({isCurrent: true });
-    // you can also do
-    // const question = await this.questionRepository.createQueryBuilder('question')
-    // .where('question.isCurrent = :isCurrent', {isCurrent: true})
-    // .getOne();
+    const question = await this.questionRepository.findOne({ isCurrent: true });
     question.answers = await this.answerService.getAnswersByQuestion(question);
     return question;
   }

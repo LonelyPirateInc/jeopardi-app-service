@@ -48,6 +48,13 @@ export class GameService {
     const questionsForGame = await this.questionService.getQuestionsByGame(game);
     console.log("questionsForGame" , questionsForGame.length);
 
+    const resetQuestions = questionsForGame.map(question => {
+      question.isCurrent = false;
+      return question;
+    });
+
+    await getManager().save(resetQuestions);
+
     const questionsWithAnswers = questionsForGame.map(async question => {
       const answers = await this.answerService.getAnswersByQuestion(question);
       question.answers = answers;
