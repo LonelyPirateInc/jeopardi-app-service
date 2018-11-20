@@ -12,22 +12,12 @@ export class QuestionController {
         private readonly questionService: QuestionService,
     ) {}
 
-    @Get('/:questionId')
-    async getScoresByGameId(
+    @Get()
+    async getCurrentQuestion(
         @Response() res: any,
-        @Param('questionId') questionId: string,
     ): Promise<Question> {
         try {
-            const question = await this.questionService.getQuestionById(questionId);
-            await getManager().transaction(async transactionalEntityManager => {
-                
-            await transactionalEntityManager.createQueryBuilder()
-                        .update(Question)
-                        .set({ isCurrent: true })
-                        .where("id = :id", { id: questionId })
-                        .execute();
-            });
-
+            const question = await this.questionService.getCurrentQuestion();
             return res.status(HttpStatus.OK).json({
                 success: true,
                 payload: question,
@@ -40,13 +30,24 @@ export class QuestionController {
         }
     }
 
-
-    @Get('/currentQuestion')
-    async getCurrentQuestion(
+    @Get('/:questionId')
+    async getQuestionById(
         @Response() res: any,
+        @Param('questionId') questionId: string,
     ): Promise<Question> {
         try {
-            const question = await this.questionService.getCurrentQuestion();
+            const question = await this.questionService.getQuestionById(questionId);
+            const answers = question.answers;
+            await getManager().transaction(async transactionalEntityManager => {
+                question.isCurrent = true;
+                delete question.answers;
+
+                await transactionalEntityManager.save(question);
+
+            });
+
+            question.answers = answers;
+
             return res.status(HttpStatus.OK).json({
                 success: true,
                 payload: question,
@@ -74,7 +75,6 @@ export class QuestionController {
                 payload: updatedQuestion,
             });
         } catch (error) {
-            console.log(error);
             return res.status(HttpStatus.BAD_REQUEST).json({
                 success: false,
                 message: error.code || error.message,

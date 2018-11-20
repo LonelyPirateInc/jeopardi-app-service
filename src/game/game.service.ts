@@ -46,7 +46,6 @@ export class GameService {
 
   async getQuestionsWithAnswersByGame(game: Game): Promise<Question[]> {
     const questionsForGame = await this.questionService.getQuestionsByGame(game);
-    console.log("questionsForGame" , questionsForGame.length);
 
     const resetQuestions = questionsForGame.map(question => {
       question.isCurrent = false;
