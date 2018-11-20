@@ -213,8 +213,8 @@ export class GameController {
             await transactionalEntityManager.save(Score, updatedScores);
 
             const question = await transactionalEntityManager.findOne(Question, { id: questionId });
+            // first client that submits the question will trigger the flip for all the other clients which will cause a bug 
             question.isActive = false;
-            question.isCurrent = false;
             await transactionalEntityManager.save(question);
 
             return res.status(HttpStatus.OK).json({
@@ -235,8 +235,8 @@ export class GameController {
             score.game = gameById;
             await transactionalEntityManager.save(score);
             const question = await transactionalEntityManager.findOne(Question, { id: questionId });
+            // first client that submits the question will trigger the flip for all the other clients which will cause a bug 
             question.isActive = false;
-            question.isCurrent = false;
             await transactionalEntityManager.save(question);
             const newScores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
             const newTotalPoints = newScores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
@@ -256,8 +256,8 @@ export class GameController {
           score.game = gameById;
           await transactionalEntityManager.save(score);
           const question = await transactionalEntityManager.findOne(Question, { id: questionId });
+          // first client that submits the question will trigger the flip for all the other clients which will cause a bug 
           question.isActive = false;
-          question.isCurrent = false;
           await transactionalEntityManager.save(question);
           const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
           const totalPoint = scores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);

@@ -1,5 +1,5 @@
 import {
-    Controller, Post, HttpStatus, Get, Response, Body, UsePipes, ValidationPipe, Param,
+    Controller, Post, Put, HttpStatus, Get, Response, Body, UsePipes, ValidationPipe, Param,
 } from '@nestjs/common';
 import { Question } from './question.entity';
 import { QuestionService } from './question.service';
@@ -59,6 +59,35 @@ export class QuestionController {
             });
         }
     }
+
+    @Put('/:questionId')
+    async updateQuestion(
+        @Response() res: any,
+        @Param('questionId') questionId: string,
+        @Body() updatedQuestion: Question,
+    ): Promise<Question> {
+        try {
+            console.log("updatedQuestion", updatedQuestion);
+            await getManager().transaction(async transactionalEntityManager => {
+              const response =  await transactionalEntityManager.createQueryBuilder()
+                .update(Question)
+                .set(updatedQuestion)
+                .where("id = :id", { id: questionId })
+                .execute();
+                console.log(response);
+            });
+            return res.status(HttpStatus.OK).json({
+                success: true,
+                payload: updatedQuestion,
+            });
+        } catch (error) {
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                success: false,
+                message: error.code || error.message,
+            });
+        }
+    }
+
 
     @Post('toggle/:questionId')
     async toggleQuestionById(

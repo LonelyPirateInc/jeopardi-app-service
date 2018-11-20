@@ -49,6 +49,8 @@ export class GameService {
 
     const resetQuestions = questionsForGame.map(question => {
       question.isCurrent = false;
+      question.isAnswersShown = false;
+      question.isPlayMusicOn = false;
       return question;
     });
 

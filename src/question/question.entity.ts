@@ -35,6 +35,12 @@ export class Question {
     @Column({ default: false })
     isCurrent: boolean;
 
+    @Column({ default: false })
+    isAnswersShown: boolean;
+
+    @Column({ default: false })
+    isPlayMusicOn: boolean;
+
     @CreateDateColumn()
     createdAt: string;
 
