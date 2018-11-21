@@ -29,7 +29,6 @@ export class QuestionService {
   async getQuestionById(questionId: string): Promise<Question> {
     const question = await this.questionRepository.findOne(questionId);
     question.answers = await this.answerService.getAnswersByQuestion(question);
-
     return question;
   }
 
@@ -47,8 +46,14 @@ export class QuestionService {
   }
 
   async getCurrentQuestion(): Promise<Question> {
-    const question = await this.questionRepository.findOne({ isCurrent: true });
-    question.answers = await this.answerService.getAnswersByQuestion(question);
+    console.log("here");
+    const question = await this.questionRepository.createQueryBuilder("question")
+    .where("question.isCurrent = :isCurrent", { isCurrent: true })
+    .getOne();
+
+
+    // console.log(question);
+    question['answers'] = await this.answerService.getAnswersByQuestion(question);
     return question;
   }
 }

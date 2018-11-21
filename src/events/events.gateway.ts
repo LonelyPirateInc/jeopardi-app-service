@@ -33,6 +33,14 @@ export class EventsGateway {
     this.server.emit('showAnswers', answers);
   }
 
+  @SubscribeMessage('cantPlay')
+  onCantPlay(): void {
+    const cantPlay = {
+      cantPlay: true,
+    };
+    this.server.emit('cantPlay', cantPlay);
+  }
+
   @SubscribeMessage('musicStart')
   onMusicStart(client, data): void {
     const musicSwitch = {

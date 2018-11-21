@@ -34,6 +34,7 @@ import * as teamData from '../../assets/teams.json';
 import { Category } from '../category/category.entity';
 import { QuestionService } from '../question/question.service';
 import { AnswerService } from '../answer/answer.service';
+import { EventsGateway } from '../events/events.gateway';
 
 @Controller('game')
 export class GameController {
@@ -43,12 +44,14 @@ export class GameController {
     private readonly questionService: QuestionService,
     private readonly answerService: AnswerService,
     private readonly scoreService: ScoreService,
+    private readonly eventsGateway: EventsGateway,
   ) {}
 
   @Get()
   async getExistingGame(@Response() res: any): Promise<Score[]> {
     try {
       const recentGame = await this.gameService.getExistingGame();
+      this.eventsGateway.onCantPlay();
       return recentGame ? res.status(HttpStatus.OK).json({
         success: true,
         payload: recentGame,
