@@ -8,6 +8,7 @@ import { QuestionModule } from '../question/question.module';
 import { AnswerModule } from '../answer/answer.module';
 import { CategoryModule } from '../category/category.module';
 import { ScoreModule } from '../score/score.module';
+import { EventsModule } from 'events/events.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ScoreModule } from '../score/score.module';
     AnswerModule,
     CategoryModule,
     ScoreModule,
+    EventsModule,
   ],
   providers: [GameService],
   controllers: [GameController],

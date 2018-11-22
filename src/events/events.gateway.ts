@@ -9,14 +9,21 @@ import { of, from, Observable } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
 import { GameService } from 'game/game.service';
 import { Game } from 'game/game.entity';
+import { OnModuleInit } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 
 @WebSocketGateway(8080, { pingTimeout: 3000000 })
-export class EventsGateway {
+export class EventsGateway implements OnModuleInit {
   @WebSocketServer() server;
 
-  constructor(private readonly gameService: GameService) { }
+  private gameService: GameService;
+  constructor(private readonly moduleRef: ModuleRef) { }
 
   messages = [];
+
+  onModuleInit(): void {
+    this.gameService = this.moduleRef.get(GameService, { strict: false });
+  }
 
   @SubscribeMessage('events')
   onEvent(client, data): Observable<WsResponse<number>> {

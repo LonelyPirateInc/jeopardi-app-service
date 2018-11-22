@@ -30,6 +30,7 @@ import { QuestionService } from './question/question.service';
 import { AnswerService } from './answer/answer.service';
 import { ScoreService } from './score/score.service';
 import { EventsModule } from 'events/events.module';
+import { EventsGateway } from 'events/events.gateway';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { EventsModule } from 'events/events.module';
     QuestionService,
     AnswerService,
     ScoreService,
+    EventsGateway,
   ],
 })
 export class AppModule {}
