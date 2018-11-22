@@ -8,10 +8,7 @@
     },
     "rules": {
         "eofline": false,
-        "quotemark": [
-            true,
-            "single"
-        ],
+        "quotemark": [true, "single", "avoid-escape", "avoid-template"],
         "indent": false,
         "member-access": [
             false
@@ -41,6 +38,7 @@
         "max-classes-per-file": [
             false
         ],
+        "no-console": false,
         "variable-name": [
             false
         ],

@@ -10,7 +10,6 @@ import {
     Param,
     Delete,
 } from '@nestjs/common';
-// import { getConnection } from 'typeorm';
 
 import { Team } from '../team/team.entity';
 import { TeamService } from '../team/team.service';
@@ -47,30 +46,42 @@ export class GameController {
     private readonly eventsGateway: EventsGateway,
   ) {}
 
+  /**
+   * Returns the most recent game that exists in the database
+   *
+   * @param {any} res response object
+   * @returns {Promise<Game>}
+   */
   @Get()
-  async getExistingGame(@Response() res: any): Promise<Score[]> {
+  async getExistingGame(@Response() res: any): Promise<Game> {
     try {
       const recentGame = await this.gameService.getExistingGame();
       this.eventsGateway.onCantPlay();
-      return recentGame ? res.status(HttpStatus.OK).json({
-        success: true,
-        payload: recentGame,
-      }) : res.status(HttpStatus.NOT_FOUND).json({ success: false });
+      return recentGame
+        ? res.status(HttpStatus.OK).json({
+            success: true,
+            payload: recentGame,
+          })
+        : res.status(HttpStatus.NOT_FOUND).json({ success: false });
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
         success: false,
-        message: error.code || error.message,
+        message: error.code || error.message
       });
     }
   }
 
+  /**
+   * Creates a game and return the new game
+   *
+   * @param {any} res response object
+   * @param {Game} game request body object transformed as Game entity
+   * @returns {Promise<Game>}
+   */
   @Post('create')
   @UsePipes(new ValidationPipe({ transform: true }))
   async createGame(@Response() res: any, @Body() game: Game): Promise<Game> {
     try {
-      // TODO: refactor with eager loading relations
-      // this is inaccurate. It shoudl use eager loading instead of manually adding the relations here.
-      // Somehow typeorm and my local mysql are not well-matched. So eager loading is not working properly.
       await getManager().transaction(async transactionalEntityManager => {
         const newGame = await transactionalEntityManager.save(game);
         const teamsData = teamData.map((dataItem: { name: string }) => {
@@ -93,7 +104,11 @@ export class GameController {
         });
 
         const existingCategories = await transactionalEntityManager.find(Category);
-        const newCategories = xorBy(existingCategories, categoriesData, 'categoryText');
+        const newCategories = xorBy(
+          existingCategories,
+          categoriesData,
+          'categoryText',
+        );
         if (newCategories && newCategories.length) {
           await transactionalEntityManager.save(Category, categoriesData);
         }
@@ -101,30 +116,29 @@ export class GameController {
         const categories = await transactionalEntityManager.find(Category);
         const questionsData = categories.map((category: Category) => data
           .filter(dataItem => dataItem.categoryName === category.categoryText)
-          .map((dataItem: {categoryName: string, questions: any[]}) => dataItem.questions.map((question: Question) => {
-            const newQuestion = new Question();
-            newQuestion.category = category;
-            newQuestion.questionText = question.questionText;
-            newQuestion.game = newGame;
-            newQuestion.musicNamePath = question.musicNamePath;
-            newQuestion.musicName = question.musicName;
-            newQuestion.difficulty = question.difficulty;
-            newQuestion.isActive = true;
-            newQuestion.answers = question.answers.map(answerData => this.answerService.buildAnswerForQuestion(answerData));
-            return newQuestion;
-          })));
+          .map((dataItem: { categoryName: string; questions: any[] }) => dataItem.questions
+            .map((question: Question) => {
+              const newQuestion = new Question();
+              newQuestion.category = category;
+              newQuestion.questionText = question.questionText;
+              newQuestion.game = newGame;
+              newQuestion.musicNamePath = question.musicNamePath;
+              newQuestion.musicName = question.musicName;
+              newQuestion.difficulty = question.difficulty;
+              newQuestion.isActive = true;
+              newQuestion.answers = question.answers.map(answerData => this.answerService.buildAnswerForQuestion(answerData));
+              return newQuestion;
+            })));
 
         const questions = flattenDepth(questionsData, 2);
-        console.log("questions", questions.length);
         await transactionalEntityManager.save(Question, questions);
         const answersData = questions.map(question => {
           const { answers } = question;
-          answers.forEach(answer => answer.question = question);
+          answers.forEach(answer => (answer.question = question));
           return answers;
         });
 
         await transactionalEntityManager.save(Answer, flattenDepth(answersData, 2));
-
         return newGame;
       }).then(async newGame => {
         const gameWithQuestions = await this.gameService.getGameWithQuestions(newGame.id);
@@ -142,6 +156,14 @@ export class GameController {
     }
   }
 
+  /**
+   * Toggles a game and return the updated game
+   *
+   * @param {any} res response object
+   * @param {string} gameId request param object
+   * @param {boolean} isActive request body object
+   * @returns {Promise<Game>}
+   */
   @Post('toggle/:gameId')
   @UsePipes(new ValidationPipe({ transform: true }))
   async toggleGame(
@@ -150,19 +172,19 @@ export class GameController {
     @Body('isActive') isActive: boolean,
   ): Promise<Game> {
     try {
-        const game = await this.gameService.getGameById(gameId);
-        if (game) {
-          game.isActive = isActive;
-          await this.gameService.toggleGame(game);
-  
-          return res.status(HttpStatus.OK).json({
-            success: true,
-            payload: game,
-          });
-        } else {
-          throw new Error('ER_NOT_FOUND');
-        }
+      const game = await this.gameService.getGameById(gameId);
+      if (game) {
+        game.isActive = isActive;
+        await this.gameService.toggleGame(game);
+        return res.status(HttpStatus.OK).json({
+          success: true,
+          payload: game,
+        });
+      } else {
+        throw new Error('ER_NOT_FOUND');
+      }
     } catch (error) {
+      console.log(error);
       return res.status(HttpStatus.BAD_REQUEST).json({
         success: false,
         message: error.code || error.message,
@@ -170,6 +192,17 @@ export class GameController {
     }
   }
 
+  /**
+   * Plays a question and insert a score with point calculated by answers
+   *
+   * @param {any} res response object
+   * @param {string} gameId request param object
+   * @param {string} questionId request param object
+   * @param {Answer[]} answers request param object
+   * @param {Team} team request body object
+   * @param {boolean} isAllInQuestion request body object
+   * @returns {Promise<boolean>}
+   */
   @Post('play/:gameId/:questionId')
   @UsePipes(new ValidationPipe({ transform: true }))
   async playQuestion(
@@ -189,20 +222,19 @@ export class GameController {
       }
 
       if (isAllInQuestion) {
-        // check if user selected JUST the right answer 
+        // check if user selected JUST the right answer
         const wrongAnswer = answers.some(answer => answer.isCorrect === false);
 
         if (wrongAnswer) {
-
           await getManager().transaction(async transactionalEntityManager => {
             const gameById = await this.gameService.getGameById(gameId);
 
             // fetch current points total
-            const currentScores = await transactionalEntityManager.find(Score, { where: { teamId: team.id, gameId } });
-            const currentTotalPoints = currentScores.reduce((initial, scoreItem) => {
-              return scoreItem.point + initial;
-            }, 0);
+            const currentScores = await transactionalEntityManager.find(Score, {
+              where: { teamId: team.id, gameId },
+            });
 
+            const currentTotalPoints = currentScores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
             const newScore = new Score();
             newScore.point = currentTotalPoints <= 0 ? currentTotalPoints : 0;
             newScore.team = team;
@@ -215,8 +247,11 @@ export class GameController {
             });
             await transactionalEntityManager.save(Score, updatedScores);
 
-            const question = await transactionalEntityManager.findOne(Question, { id: questionId });
-            // first client that submits the question will trigger the flip for all the other clients which will cause a bug 
+            const question = await transactionalEntityManager.findOne(
+              Question,
+              { id: questionId },
+            );
+            // first client that submits the question will trigger the flip for all the other clients which will cause a bug
             question.isActive = false;
             await transactionalEntityManager.save(question);
 
@@ -225,10 +260,8 @@ export class GameController {
               payload: 0,
             });
           });
-
         } else {
           await getManager().transaction(async transactionalEntityManager => {
-
             const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
             const currentTotalPoints = scores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
             const gameById = await this.gameService.getGameById(gameId);
@@ -237,12 +270,18 @@ export class GameController {
             score.team = team;
             score.game = gameById;
             await transactionalEntityManager.save(score);
-            const question = await transactionalEntityManager.findOne(Question, { id: questionId });
-            // first client that submits the question will trigger the flip for all the other clients which will cause a bug 
+            const question = await transactionalEntityManager.findOne(
+              Question,
+              { id: questionId },
+            );
+            // first client that submits the question will trigger the flip for all the other clients which will cause a bug
             question.isActive = false;
             await transactionalEntityManager.save(question);
             const newScores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
-            const newTotalPoints = newScores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
+            const newTotalPoints = newScores.reduce(
+              (initial, scoreItem) => scoreItem.point + initial,
+              0,
+            );
             return res.status(HttpStatus.OK).json({
               success: true,
               payload: newTotalPoints,
@@ -259,10 +298,10 @@ export class GameController {
           score.game = gameById;
           await transactionalEntityManager.save(score);
           const question = await transactionalEntityManager.findOne(Question, { id: questionId });
-          // first client that submits the question will trigger the flip for all the other clients which will cause a bug 
+          // first client that submits the question will trigger the flip for all the other clients which will cause a bug
           question.isActive = false;
           await transactionalEntityManager.save(question);
-          const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId);
+          const scores = await this.scoreService.getScoresByTeamAndGameId(team.id, gameId );
           const totalPoint = scores.reduce((initial, scoreItem) => scoreItem.point + initial, 0);
           return res.status(HttpStatus.OK).json({
             success: true,
@@ -278,13 +317,19 @@ export class GameController {
     }
   }
 
+  /**
+   * Returns scores for all teams by game
+   *
+   * @param {any} res response object
+   * @param {string} gameId request param object
+   * @returns {Promise<Team[]>}
+   */
   @Get(':gameId/scores')
   async getScoresByGameId(
     @Response() res: any,
     @Param('gameId') gameId: string,
   ): Promise<Team[]> {
     try {
-      // const gameById = await this.gameService.getGameById(gameId);
       const gameScores = await this.scoreService.getScoresByGameId(gameId);
       const scoresSortedByTeam = groupBy(gameScores, score => score.team.id);
       const keys = Object.keys(scoresSortedByTeam);
@@ -308,6 +353,14 @@ export class GameController {
     }
   }
 
+  /**
+   * Returns score by team per game
+   *
+   * @param {any} res response object
+   * @param {string} gameId request param object
+   * @param {string} teamId request param object
+   * @returns {Promise<number>}
+   */
   @Get(':gameId/:teamId')
   async getGameScoreByTeamId(
     @Response() res: any,
@@ -332,5 +385,4 @@ export class GameController {
       });
     }
   }
-  // getQuestionCategories
 }
